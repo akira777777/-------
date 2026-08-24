@@ -18,7 +18,7 @@ import FAQSection from './components/FAQSection';
 import type { BookingData } from './components/BookingModal';
 import { ZONES, type ZoneId, type PiercingType } from './constants/piercings';
 import { CurrencyProvider, useCurrency } from './constants/currency';
-import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock, Layers, Gem } from 'lucide-react';
+import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock, Layers } from 'lucide-react';
 
 const JewelryConfigurator = dynamic(() => import('./components/JewelryConfigurator'), {
   loading: () => (
@@ -222,7 +222,7 @@ function HomeContent() {
                 configuratorEl.scrollIntoView({ behavior: 'smooth' });
               }
             }} 
-            onSelectForEarSet={(piercing) => {
+            onSelectForEarSet={() => {
               const earEl = document.getElementById('ear-curation');
               if (earEl) {
                 earEl.scrollIntoView({ behavior: 'smooth' });
