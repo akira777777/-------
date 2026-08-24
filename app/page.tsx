@@ -329,21 +329,32 @@ function HomeContent() {
             <p className="text-xs text-gray-400 max-w-md leading-relaxed mb-6">
               Флагманская студия анатомического пирсинга, Ear Curation и дизайнерских украшений в Праге. Медицинская стерилизация, проверенные сплавы ASTM F-136 и пожизненная поддержка клиентов.
             </p>
-            <div className="flex gap-3.5">
+            <div className="flex flex-wrap gap-3">
               <button 
                 onClick={() => handleOpenBooking()}
-                className="btn-premium bg-[#E0A98B] text-black font-bold py-2 px-6 text-xs shadow-[0_0_15px_rgba(224,169,139,0.3)]"
+                className="btn-premium bg-[#E0A98B] text-black font-bold py-2.5 px-6 text-xs shadow-[0_0_15px_rgba(224,169,139,0.3)]"
               >
                 Онлайн-запись
               </button>
               <a 
-                href="https://t.me/" 
+                href={SOCIAL_LINKS.telegram.url}
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="btn-premium border-white/20 text-white hover:border-[#00F2FE] hover:text-[#00F2FE] py-2 px-5 text-xs flex items-center gap-1.5"
+                className="btn-premium border-white/20 text-white hover:border-[#00F2FE] hover:text-[#00F2FE] py-2.5 px-4 text-xs flex items-center gap-1.5"
+                title="Telegram @yacure0"
               >
-                <MessageCircle className="w-3.5 h-3.5" />
-                Telegram
+                <MessageCircle className="w-3.5 h-3.5 text-[#00F2FE]" />
+                <span>Telegram: {SOCIAL_LINKS.telegram.handle}</span>
+              </a>
+              <a 
+                href={SOCIAL_LINKS.instagram.url}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-premium border-white/20 text-white hover:border-[#E0A98B] hover:text-[#E0A98B] py-2.5 px-4 text-xs flex items-center gap-1.5"
+                title="Instagram @b00tleg._"
+              >
+                <Instagram className="w-3.5 h-3.5 text-[#E0A98B]" />
+                <span>Instagram: {SOCIAL_LINKS.instagram.handle}</span>
               </a>
             </div>
           </div>
@@ -374,8 +385,26 @@ function HomeContent() {
                 <span>Ежедневно с 11:00 до 21:30 (по записи)</span>
               </li>
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-[#E0A98B] shrink-0" />
-                <span>Связь в Telegram / WhatsApp</span>
+                <MessageCircle className="w-4 h-4 text-[#00F2FE] shrink-0" />
+                <a 
+                  href={SOCIAL_LINKS.telegram.url}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-[#00F2FE] transition-colors"
+                >
+                  Telegram: <strong className="text-white">{SOCIAL_LINKS.telegram.handle}</strong>
+                </a>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Instagram className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                <a 
+                  href={SOCIAL_LINKS.instagram.url}
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-[#E0A98B] transition-colors"
+                >
+                  Instagram: <strong className="text-white">{SOCIAL_LINKS.instagram.handle}</strong>
+                </a>
               </li>
             </ul>
           </div>
