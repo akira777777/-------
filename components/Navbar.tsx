@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { Menu, X, Sparkles, Globe, ChevronDown } from 'lucide-react';
+import { Menu, X, Sparkles, Globe, ChevronDown, Instagram } from 'lucide-react';
 import { useCurrency, CURRENCIES, type CurrencyCode } from '@/constants/currency';
+import { SOCIAL_LINKS } from '@/constants/content_files/content';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -174,18 +175,38 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           <button onClick={() => scrollTo('testimonials')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
             💬 Отзывы клиентов
           </button>
-          <button onClick={() => scrollTo('faq')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose">
+          <button onClick={() => scrollTo('faq')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
             ❓ Вопросы и ответы (FAQ)
           </button>
+
+          <div className="grid grid-cols-2 gap-2 pt-1">
+            <a
+              href={SOCIAL_LINKS.telegram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-3 rounded-xl glass border border-white/10 text-xs text-gray-300 hover:text-white flex items-center justify-center gap-1.5 transition-colors"
+            >
+              <span>Telegram ({SOCIAL_LINKS.telegram.handle})</span>
+            </a>
+            <a
+              href={SOCIAL_LINKS.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2 px-3 rounded-xl glass border border-white/10 text-xs text-[#E0A98B] hover:text-white flex items-center justify-center gap-1.5 transition-colors"
+            >
+              <Instagram className="w-3.5 h-3.5" />
+              <span>Instagram</span>
+            </a>
+          </div>
           
           <button
             onClick={() => {
               setMobileMenuOpen(false);
               onOpenBooking();
             }}
-            className="w-full btn-premium bg-[#E0A98B] text-black font-bold text-center py-3 text-sm mt-3 shadow-[0_0_20px_rgba(224,169,139,0.35)]"
+            className="w-full btn-premium bg-[#E0A98B] text-black font-bold text-center py-3 text-sm mt-2 shadow-[0_0_20px_rgba(224,169,139,0.35)]"
           >
-            Онлайн-запись в Telegram
+            Онлайн-запись к Anastasya
           </button>
         </div>
       )}
