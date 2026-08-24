@@ -258,7 +258,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(careKitPrice)}</span>
+                <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(390)}</span>
                 <span className="block text-[10px] text-gray-500">{withCareKit ? 'Выбрано' : 'Нажмите для выбора'}</span>
               </div>
             </div>

@@ -25,29 +25,29 @@ export const MATERIALS: Material[] = [
     id: 'gold_14k',
     name: 'Золото 14K',
     description: 'Классическое золото с высокой прочностью и благородным блеском.',
-    basePriceMultiplier: 2.5,
+    basePriceMultiplier: 2.2,
     color: '#E0A98B'
   },
   {
     id: 'gold_18k',
     name: 'Золото 18K',
     description: 'Премиальное золото с повышенным содержанием чистого металла.',
-    basePriceMultiplier: 3.5,
+    basePriceMultiplier: 3.0,
     color: '#D4AF37'
   },
   {
     id: 'platinum',
     name: 'Платина',
     description: 'Самый редкий и долговечный металл для эксклюзивных украшений.',
-    basePriceMultiplier: 5.0,
+    basePriceMultiplier: 4.2,
     color: '#E5E4E2'
   }
 ];
 
 export const STONES: Stone[] = [
   { id: 'none', name: 'Без камня', price: 0, color: 'transparent' },
-  { id: 'diamond', name: 'Бриллиант', price: 2400, color: '#FFFFFF' },
-  { id: 'sapphire', name: 'Сапфир', price: 1200, color: '#0F52BA' },
-  { id: 'ruby', name: 'Рубин', price: 1450, color: '#E0115F' },
-  { id: 'emerald', name: 'Изумруд', price: 1750, color: '#50C878' }
+  { id: 'diamond', name: 'Бриллиант', price: 1800, color: '#FFFFFF' },
+  { id: 'sapphire', name: 'Сапфир', price: 1100, color: '#0F52BA' },
+  { id: 'ruby', name: 'Рубин', price: 1250, color: '#E0115F' },
+  { id: 'emerald', name: 'Изумруд', price: 1400, color: '#50C878' }
 ];
