@@ -106,7 +106,7 @@ export default function Home() {
             className="relative mx-auto w-full max-w-[520px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.6)] group"
           >
             <Image
-              src="/images/curated-ear-styling.jpg"
+              src="/images/curated-ear-styling.webp"
               alt="Анатомический сетап с золотым хеликсом Marquise и титановым кончем от мастера Anastasya"
               fill
               priority

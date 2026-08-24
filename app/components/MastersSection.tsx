@@ -16,7 +16,7 @@ const PORTFOLIO_WORKS = [
     title: 'Каскадный сетап: Marquise Helix & Daith',
     healed: 'Полностью заживший',
     metal: 'Золото 14K + Бриллианты + Опал',
-    image: '/images/curated-ear-styling.jpg',
+    image: '/images/curated-ear-styling.webp',
   },
   {
     id: 'p2',
@@ -24,7 +24,7 @@ const PORTFOLIO_WORKS = [
     title: 'Nostril Ring & Ключичный микродермал',
     healed: 'Свежий сетап',
     metal: 'Золото 14K + Swarovski Crystal',
-    image: '/images/facial-piercing-editorial.jpg',
+    image: '/images/facial-piercing-editorial.webp',
   },
   {
     id: 'p3',
@@ -32,7 +32,7 @@ const PORTFOLIO_WORKS = [
     title: 'Сет кликеров и кластеров ручной закрепки',
     healed: 'Ювелирный подбор',
     metal: 'Титан ASTM F-136 + Натуральные камни',
-    image: '/images/jewelry-editorial.png',
+    image: '/images/jewelry-editorial.webp',
   },
   {
     id: 'p4',
@@ -40,7 +40,7 @@ const PORTFOLIO_WORKS = [
     title: 'Анатомический золотой сетап Helix + Conch',
     healed: 'Заживший проект',
     metal: 'Титановый банан + 14K Gold Tops',
-    image: '/images/ear-curation-hero.png',
+    image: '/images/ear-curation-hero.webp',
   },
 ];
 
@@ -103,7 +103,7 @@ export default function MastersSection({ onBookWithMaster }: MastersSectionProps
             >
               <div className="relative min-h-[420px] lg:min-h-[560px]">
                 <Image
-                  src="/images/anastasya-portrait.jpg"
+                  src="/images/anastasya-portrait.webp"
                   alt="Anastasya — ведущий мастер пирсинга и ювелирный куратор AURA Piercing Prague"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"

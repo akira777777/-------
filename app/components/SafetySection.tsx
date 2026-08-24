@@ -52,7 +52,7 @@ export default function SafetySection() {
         {/* Большой визуальный блок с фото стерильного сетапа */}
         <div className="mb-14 relative min-h-[280px] md:min-h-[360px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
           <Image
-            src="/images/sterile-procedure-tray.jpg"
+            src="/images/sterile-procedure-tray.webp"
             alt="Стерильный хирургический лоток с крафт-пакетом, титановым украшением ASTM F-136 и одноразовой иглой лазерной заточки"
             fill
             sizes="(max-width: 1280px) 100vw, 1280px"

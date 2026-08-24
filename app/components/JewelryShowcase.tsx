@@ -121,7 +121,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
 
         <div className="relative min-h-[220px] md:min-h-[280px] overflow-hidden rounded-[2rem] border border-white/10 mb-10">
           <Image
-            src="/images/jewelry-editorial.png"
+            src="/images/jewelry-editorial.webp"
             alt="Титановые и золотые украшения для пирсинга на металлическом подносе"
             fill
             sizes="(max-width: 768px) 100vw, 1280px"
