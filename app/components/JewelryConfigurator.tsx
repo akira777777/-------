@@ -4,12 +4,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES } from '../constants/jewelry_types';
 import { formatCzk } from '../constants/currency';
-import { CheckCircle2, Sparkles, Shield, ChevronRight, ChevronLeft, Droplets } from 'lucide-react';
+import type { PiercingType } from '../constants/piercings';
+import { CheckCircle2, Sparkles, ChevronRight, Droplets } from 'lucide-react';
 
 interface ConfiguratorProps {
-  basePiercing: any;
+  basePiercing: PiercingType;
   onBookSetup?: (config: {
-    piercing: any;
+    piercing: PiercingType;
     material: string;
     stone: string;
     anodization?: string;
@@ -26,6 +27,8 @@ const ANODIZATION_OPTIONS = [
   { id: 'violet', name: 'Анодирование Deep Violet', color: '#8A2BE2', price: 150 },
 ];
 
+const CARE_KIT_PRICE = 390;
+
 export default function JewelryConfigurator({ basePiercing, onBookSetup }: ConfiguratorProps) {
   const [step, setStep] = useState(1);
   const [selectedMaterial, setSelectedMaterial] = useState(MATERIALS[0]);
@@ -34,7 +37,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
   const [withCareKit, setWithCareKit] = useState(false);
 
   // Расчет стоимости
-  const careKitPrice = withCareKit ? 390 : 0;
+  const careKitPrice = withCareKit ? CARE_KIT_PRICE : 0;
   const baseMultiplied = Math.round(basePiercing.basePrice * selectedMaterial.basePriceMultiplier);
   const totalPrice = baseMultiplied + selectedStone.price + selectedAnodization.price + careKitPrice;
 
@@ -240,8 +243,10 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
             </div>
 
             {/* Чекбокс ухода */}
-            <div
-              onClick={() => setWithCareKit(!withCareKit)}
+            <button
+              type="button"
+              aria-pressed={withCareKit}
+              onClick={() => setWithCareKit((current) => !current)}
               className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                 withCareKit
                   ? 'border-[#00F2FE] bg-[#00F2FE]/10 shadow-[0_0_20px_rgba(0,242,254,0.15)]'
@@ -258,10 +263,10 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(390)}</span>
+                <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(CARE_KIT_PRICE)}</span>
                 <span className="block text-[10px] text-gray-500">{withCareKit ? 'Выбрано' : 'Нажмите для выбора'}</span>
               </div>
-            </div>
+            </button>
 
             <div className="flex justify-between pt-4">
               <button onClick={prevStep} className="btn-premium border-white/20 text-white text-xs sm:text-sm px-6">

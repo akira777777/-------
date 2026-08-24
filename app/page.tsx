@@ -1,20 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import ZoneSelector from './components/ZoneSelector';
 import AnatomyMap from './components/AnatomyMap';
-import JewelryConfigurator from './components/JewelryConfigurator';
 import JewelryShowcase from './components/JewelryShowcase';
 import MastersSection from './components/MastersSection';
 import SafetySection from './components/SafetySection';
 import AftercareDownsize from './components/AftercareDownsize';
 import FAQSection from './components/FAQSection';
-import BookingModal, { type BookingData } from './components/BookingModal';
+import type { BookingData } from './components/BookingModal';
 import { ZONES, type ZoneId, type PiercingType } from './constants/piercings';
 import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock } from 'lucide-react';
+
+const JewelryConfigurator = dynamic(() => import('./components/JewelryConfigurator'), {
+  loading: () => (
+    <div className="glass rounded-[2.5rem] border border-white/10 p-10 text-center text-sm text-gray-400" role="status">
+      Загружаем конструктор украшения…
+    </div>
+  ),
+});
+
+const BookingModal = dynamic(() => import('./components/BookingModal'), {
+  ssr: false,
+});
 
 export default function Home() {
   const [activeZone, setActiveZone] = useState<ZoneId>(ZONES[0].id);
@@ -22,17 +34,21 @@ export default function Home() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
 
-  const scrollToSection = (id: string) => {
+  const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
-  };
+  }, []);
 
-  const handleOpenBooking = (customData?: BookingData) => {
+  const handleOpenBooking = useCallback((customData?: BookingData) => {
     setBookingData(customData || (selectedPiercing ? { piercing: selectedPiercing } : null));
     setIsBookingOpen(true);
-  };
+  }, [selectedPiercing]);
+
+  const handleCloseBooking = useCallback(() => {
+    setIsBookingOpen(false);
+  }, []);
 
   return (
     <main className="min-h-screen bg-background text-white selection:bg-[#E0A98B] selection:text-black">
@@ -302,7 +318,7 @@ export default function Home() {
       {/* Модальное окно онлайн-записи */}
       <BookingModal
         isOpen={isBookingOpen}
-        onClose={() => setIsBookingOpen(false)}
+        onClose={handleCloseBooking}
         initialData={bookingData}
       />
     </main>
