@@ -16,8 +16,8 @@ module.exports = {
         titanium: "#A9A9A9",
       },
       fontFamily: {
-        heading: ["Syne", "sans-serif"],
-        body: ["Inter", "Plus Jakarta Sans", "sans-serif"],
+        heading: ["var(--font-syne)", "sans-serif"],
+        body: ["var(--font-jakarta)", "sans-serif"],
       },
     },
   },
