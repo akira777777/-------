@@ -107,7 +107,7 @@ export default function FAQSection() {
             <p className="text-xs text-gray-400 mt-1">Задайте его напрямую дежурному пирсеру студии в Telegram</p>
           </div>
           <a
-            href="https://t.me/"
+            href="https://t.me/yacure0"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-premium bg-[#E0A98B] text-black font-bold text-xs py-2.5 px-6 flex items-center gap-2 shrink-0 hover:bg-white transition-all shadow-[0_0_20px_rgba(224,169,139,0.2)]"
