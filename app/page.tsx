@@ -6,14 +6,20 @@ import Navbar from './components/Navbar';
 import ZoneSelector from './components/ZoneSelector';
 import AnatomyMap from './components/AnatomyMap';
 import JewelryConfigurator from './components/JewelryConfigurator';
+import JewelryShowcase from './components/JewelryShowcase';
+import MastersSection from './components/MastersSection';
 import SafetySection from './components/SafetySection';
 import AftercareDownsize from './components/AftercareDownsize';
+import FAQSection from './components/FAQSection';
+import BookingModal, { type BookingData } from './components/BookingModal';
 import { ZONES, type ZoneId, type PiercingType } from './constants/piercings';
-import { Sparkles, Shield, Award, HeartHandshake } from 'lucide-react';
+import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock } from 'lucide-react';
 
 export default function Home() {
   const [activeZone, setActiveZone] = useState<ZoneId>(ZONES[0].id);
   const [selectedPiercing, setSelectedPiercing] = useState<PiercingType | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [bookingData, setBookingData] = useState<BookingData | null>(null);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -22,14 +28,20 @@ export default function Home() {
     }
   };
 
+  const handleOpenBooking = (customData?: BookingData) => {
+    setBookingData(customData || (selectedPiercing ? { piercing: selectedPiercing } : null));
+    setIsBookingOpen(true);
+  };
+
   return (
     <main className="min-h-screen bg-background text-white selection:bg-[#E0A98B] selection:text-black">
-      <Navbar />
+      {/* Навигационная панель */}
+      <Navbar onOpenBooking={() => handleOpenBooking()} />
       
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-[#E0A98B]/5 blur-[140px] rounded-full -z-10" />
-        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-[#D4AF37]/5 blur-[100px] rounded-full -z-10" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[650px] bg-[#E0A98B]/5 blur-[150px] rounded-full -z-10" />
+        <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-[#D4AF37]/5 blur-[120px] rounded-full -z-10" />
         
         <div className="max-w-7xl mx-auto text-center">
           <motion.div
@@ -37,9 +49,9 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-6">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(224,169,139,0.15)]">
               <Sparkles className="w-3.5 h-3.5" />
-              Премиальная студия модификаций
+              Премиальная студия пирсинга & ювелирного модифицирования
             </span>
 
             <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-heading font-bold mb-6 tracking-tight leading-tight">
@@ -48,14 +60,14 @@ export default function Home() {
             </h1>
             
             <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 mb-10 font-body leading-relaxed">
-              Безупречная стерильность медицинского уровня, имплантационный титан ASTM F-136 и 
-              авторский подбор украшений под индивидуальную анатомию.
+              Безупречная стерильность медицинского уровня, сертифицированный титан ASTM F-136, золото 14k/18k и 
+              авторский подбор украшений под индивидуальную геометрию ушей и лица.
             </p>
             
             <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
               <button 
-                onClick={() => scrollToSection('map')}
-                className="btn-premium bg-[#E0A98B] text-black hover:bg-white transition-all duration-300 font-bold w-full sm:w-auto shadow-[0_0_25px_rgba(224,169,139,0.3)]"
+                onClick={() => handleOpenBooking()}
+                className="btn-premium bg-[#E0A98B] text-black hover:bg-white transition-all duration-300 font-bold w-full sm:w-auto shadow-[0_0_25px_rgba(224,169,139,0.35)]"
               >
                 Записаться онлайн
               </button>
@@ -72,17 +84,17 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto pt-10 border-t border-white/5">
             <div className="flex flex-col items-center p-6 glass rounded-2xl border border-white/5 hover:border-[#E0A98B]/20 transition-colors">
               <Shield className="w-6 h-6 text-[#E0A98B] mb-2" />
-              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Стерилизация</span>
-              <p className="font-medium text-sm text-gray-200">Медицинские автоклавы класса B</p>
+              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 font-bold">Стерилизация</span>
+              <p className="font-medium text-sm text-gray-200">Автоклавы класса B (134°C, 3 фазы)</p>
             </div>
             <div className="flex flex-col items-center p-6 glass rounded-2xl border border-white/5 hover:border-[#E0A98B]/20 transition-colors">
               <Award className="w-6 h-6 text-[#D4AF37] mb-2" />
-              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Биосовместимость</span>
-              <p className="font-medium text-sm text-gray-200">Титан ASTM F-136 без никеля</p>
+              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 font-bold">Биосовместимость</span>
+              <p className="font-medium text-sm text-gray-200">Имплантационный титан без никеля</p>
             </div>
             <div className="flex flex-col items-center p-6 glass rounded-2xl border border-white/5 hover:border-[#E0A98B]/20 transition-colors">
-              <HeartHandshake className="w-6 h-6 text-[#E0A98B] mb-2" />
-              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1">Сопровождение</span>
+              <HeartHandshake className="w-6 h-6 text-[#00F2FE] mb-2" />
+              <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 font-bold">LTV Забота</span>
               <p className="font-medium text-sm text-gray-200">Бесплатный даунсайз и осмотры</p>
             </div>
           </div>
@@ -92,10 +104,10 @@ export default function Home() {
       {/* Interactive Map Section */}
       <section id="map" className="py-24 px-6 bg-surface/20 border-t border-white/5">
         <div className="max-w-7xl mx-auto text-center mb-12">
-          <span className="text-xs uppercase tracking-widest text-[#E0A98B] font-bold">Навигатор по проколам</span>
-          <h2 className="text-3xl md:text-5xl font-heading font-bold mt-2 mb-4">Интерактивная карта</h2>
+          <span className="text-xs uppercase tracking-widest text-[#E0A98B] font-bold">Анатомический навигатор</span>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold mt-2 mb-4">Интерактивная карта проколов</h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base">
-            Выберите анатомическую зону, нажмите на интересующую точку и узнайте характеристики, сложность и стоимость процедуры.
+            Выберите зону, нажмите на интересующую точку и узнайте шкалу болезненности, сроки заживления и базовую стоимость.
           </p>
         </div>
         
@@ -104,7 +116,13 @@ export default function Home() {
           
           <AnatomyMap 
             activeZone={activeZone} 
-            onAddtoConfigurator={(piercing) => setSelectedPiercing(piercing)} 
+            onAddtoConfigurator={(piercing) => {
+              setSelectedPiercing(piercing);
+              const configuratorEl = document.getElementById('configurator');
+              if (configuratorEl) {
+                configuratorEl.scrollIntoView({ behavior: 'smooth' });
+              }
+            }} 
           />
 
           {selectedPiercing && (
@@ -117,40 +135,136 @@ export default function Home() {
             >
               <div className="text-center mb-8">
                 <span className="text-xs uppercase tracking-widest text-[#D4AF37] font-bold">Шаг 2</span>
-                <h3 className="text-3xl font-heading font-bold mt-1 text-white">Калькулятор и Конструктор сетапа</h3>
-                <p className="text-sm text-gray-400 mt-2">Кастомизируйте основу, пробу золота и инкрустацию камней под ваш стиль</p>
+                <h3 className="text-3xl font-heading font-bold mt-1 text-white">Конструктор и калькулятор сетапа</h3>
+                <p className="text-sm text-gray-400 mt-2">Кастомизируйте металл, камни и цвет анодирования под ваш образ</p>
               </div>
-              <JewelryConfigurator basePiercing={selectedPiercing} />
+              <JewelryConfigurator 
+                basePiercing={selectedPiercing} 
+                onBookSetup={(config) => {
+                  handleOpenBooking({
+                    piercing: config.piercing,
+                    material: config.material,
+                    stone: config.stone,
+                    totalPrice: config.totalPrice
+                  });
+                }}
+              />
             </motion.div>
           )}
         </div>
       </section>
 
+      {/* Jewelry Showcase Section */}
+      <JewelryShowcase 
+        onSelectJewelry={(item) => {
+          handleOpenBooking({
+            material: item.material,
+            stone: item.gem,
+            totalPrice: item.price
+          });
+        }} 
+      />
+
+      {/* Masters & Portfolio Section */}
+      <MastersSection 
+        onBookWithMaster={() => {
+          handleOpenBooking();
+        }} 
+      />
+
       {/* Safety Section */}
-      <section id="safety">
-        <SafetySection />
-      </section>
+      <SafetySection />
 
       {/* Aftercare & Downsize Section */}
-      <section id="aftercare">
-        <AftercareDownsize />
-      </section>
+      <AftercareDownsize />
 
-      {/* Footer */}
-      <footer className="py-16 px-6 border-t border-white/5 bg-black/60 text-center text-gray-500 text-sm">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-left">
-            <p className="text-lg font-heading font-bold text-gold-rose">AURA PIERCING STUDIO</p>
-            <p className="text-xs text-gray-400 mt-1">Авторский пирсинг & ювелирное модифицирование</p>
+      {/* FAQ Section */}
+      <FAQSection />
+
+      {/* Footer & Contacts */}
+      <footer className="py-20 px-6 border-t border-white/5 bg-black/70 text-gray-400 text-sm relative">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-14">
+          <div className="md:col-span-2">
+            <h3 className="text-2xl font-heading font-bold text-gold-rose mb-3">AURA PIERCING STUDIO</h3>
+            <p className="text-xs text-gray-400 max-w-md leading-relaxed mb-6">
+              Флагманская студия анатомического пирсинга, Ear Curation и дизайнерских украшений. Медицинская стерилизация, проверенные сплавы и пожизненная поддержка клиентов.
+            </p>
+            <div className="flex gap-4">
+              <button 
+                onClick={() => handleOpenBooking()}
+                className="btn-premium bg-[#E0A98B] text-black font-bold py-2 px-6 text-xs"
+              >
+                Онлайн-запись
+              </button>
+              <a 
+                href="https://t.me/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-premium border-white/20 text-white hover:border-[#00F2FE] hover:text-[#00F2FE] py-2 px-5 text-xs flex items-center gap-1.5"
+              >
+                <MessageCircle className="w-3.5 h-3.5" />
+                Telegram
+              </a>
+            </div>
           </div>
-          <div className="flex gap-6 text-xs">
-            <button onClick={() => scrollToSection('map')} className="hover:text-white transition-colors">Карта</button>
-            <button onClick={() => scrollToSection('safety')} className="hover:text-white transition-colors">Безопасность</button>
-            <button onClick={() => scrollToSection('aftercare')} className="hover:text-white transition-colors">Уход</button>
+
+          <div>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-mono">Навигация</h4>
+            <ul className="space-y-2.5 text-xs">
+              <li><button onClick={() => scrollToSection('map')} className="hover:text-gold-rose transition-colors">Карта проколов</button></li>
+              <li><button onClick={() => scrollToSection('jewelry')} className="hover:text-gold-rose transition-colors">Витрина украшений</button></li>
+              <li><button onClick={() => scrollToSection('masters')} className="hover:text-gold-rose transition-colors">Мастера и портфолио</button></li>
+              <li><button onClick={() => scrollToSection('safety')} className="hover:text-gold-rose transition-colors">Стандарты безопасности</button></li>
+              <li><button onClick={() => scrollToSection('aftercare')} className="hover:text-gold-rose transition-colors">Памятка и даунсайз</button></li>
+              <li><button onClick={() => scrollToSection('faq')} className="hover:text-gold-rose transition-colors">Вопросы и ответы</button></li>
+            </ul>
           </div>
-          <p className="text-xs">© 2026 AURA STUDIO. Все права защищены.</p>
+
+          <div>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-mono">Контакты & Локация</h4>
+            <ul className="space-y-3 text-xs text-gray-300">
+              <li className="flex items-center gap-2.5">
+                <MapPin className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                <span>Москва, ул. Покровка, 14 (м. Чистые пруды)</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Clock className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                <span>Ежедневно с 11:00 до 22:00</span>
+              </li>
+              <li className="flex items-center gap-2.5">
+                <Phone className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                <span>+7 (495) 800-44-22</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-600">
+          <p>© 2026 AURA PIERCING STUDIO. Все права защищены.</p>
+          <p>Медицинская лицензия № ЛО-77-01-019842</p>
         </div>
       </footer>
+
+      {/* Floating Quick Telegram Action Button */}
+      <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3">
+        <button
+          onClick={() => handleOpenBooking()}
+          className="group flex items-center gap-2 bg-[#E0A98B] hover:bg-white text-black font-bold p-3.5 rounded-full shadow-[0_0_25px_rgba(224,169,139,0.4)] transition-all duration-300 hover:scale-105"
+          aria-label="Записаться"
+        >
+          <Sparkles className="w-5 h-5" />
+          <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap text-xs font-bold uppercase tracking-wider pr-1">
+            Записаться
+          </span>
+        </button>
+      </div>
+
+      {/* Модальное окно онлайн-записи */}
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        initialData={bookingData}
+      />
     </main>
   );
 }
