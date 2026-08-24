@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Calendar, Clock, User, Phone, Sparkles, CheckCircle2, MessageSquare, Send } from 'lucide-react';
 import type { PiercingType } from '../constants/piercings';
+import { formatCzk } from '../constants/currency';
 
 export interface BookingData {
   piercing?: PiercingType | null;
@@ -18,11 +19,7 @@ interface BookingModalProps {
   initialData?: BookingData | null;
 }
 
-const MASTERS = [
-  { id: 'anna', name: 'Анна Воронова', role: 'Top-Master & Ear Curation', exp: '8 лет' },
-  { id: 'mark', name: 'Марк Рейн', role: 'Microdermals & Complex Septum', exp: '6 лет' },
-  { id: 'sofia', name: 'София Левина', role: 'Jewelry Stylist & Piercer', exp: '4 года' },
-];
+const MASTER = { name: 'Anastasya', role: 'Piercer & Jewelry Curator' };
 
 const TIME_SLOTS = [
   '12:00', '13:30', '15:00', '16:30', '18:00', '19:30', '21:00'
@@ -32,7 +29,6 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [clientName, setClientName] = useState('');
   const [clientPhone, setClientPhone] = useState('');
-  const [selectedMaster, setSelectedMaster] = useState(MASTERS[0].id);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState(TIME_SLOTS[2]);
   const [comment, setComment] = useState('');
@@ -41,7 +37,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   if (!isOpen) return null;
 
   const piercingName = initialData?.piercing?.name || 'Консультация & Прокол';
-  const finalPrice = initialData?.totalPrice || initialData?.piercing?.basePrice || 2000;
+  const finalPrice = initialData?.totalPrice || initialData?.piercing?.basePrice || 1200;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,10 +55,10 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
       `• Услуга: ${piercingName}\n` +
       `${initialData?.material ? `• Металл: ${initialData.material}\n` : ''}` +
       `${initialData?.stone ? `• Камень: ${initialData.stone}\n` : ''}` +
-      `• Мастер: ${MASTERS.find(m => m.id === selectedMaster)?.name}\n` +
+      `• Мастер: ${MASTER.name}\n` +
       `• Дата и время: ${selectedDate || 'Ближайшая'} в ${selectedTime}\n` +
       `• Клиент: ${clientName || 'Без имени'} (${clientPhone || 'Не указан'})\n` +
-      `• Стоимость сетапа: ${finalPrice} ₽`
+      `• Ориентировочная стоимость: ${formatCzk(finalPrice)}`
     );
     return `https://t.me/share/url?url=&text=${text}`;
   };
@@ -121,7 +117,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
                   </div>
                   <div className="text-right">
                     <span className="text-[10px] uppercase text-gray-400">Расчет</span>
-                    <p className="text-lg font-bold text-gold-rose">{finalPrice} ₽</p>
+                    <p className="text-lg font-bold text-gold-rose">{formatCzk(finalPrice)}</p>
                   </div>
                 </div>
               )}
@@ -140,7 +136,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
                         required
                         value={clientName}
                         onChange={(e) => setClientName(e.target.value)}
-                        placeholder="Александра"
+                        placeholder="Анастасия"
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-[#E0A98B] text-sm"
                       />
                     </div>
@@ -157,34 +153,24 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
                         required
                         value={clientPhone}
                         onChange={(e) => setClientPhone(e.target.value)}
-                        placeholder="+7 (999) 000-00-00"
+                        placeholder="+420 123 456 789"
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-[#E0A98B] text-sm"
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Выбор мастера */}
+                {/* Единственный мастер */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-gray-400 mb-1.5 font-medium">
                     Мастер
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {MASTERS.map((m) => (
-                      <button
-                        type="button"
-                        key={m.id}
-                        onClick={() => setSelectedMaster(m.id)}
-                        className={`p-3 rounded-xl border text-left transition-all ${
-                          selectedMaster === m.id
-                            ? 'border-[#E0A98B] bg-[#E0A98B]/10 shadow-[0_0_15px_rgba(224,169,139,0.15)]'
-                            : 'border-white/5 bg-white/5 hover:border-white/20'
-                        }`}
-                      >
-                        <p className="text-xs font-bold text-white">{m.name}</p>
-                        <p className="text-[10px] text-gray-400 truncate mt-0.5">{m.role}</p>
-                      </button>
-                    ))}
+                  <div className="p-3.5 rounded-xl border border-[#E0A98B]/40 bg-[#E0A98B]/10 flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-bold text-white">{MASTER.name}</p>
+                      <p className="text-[10px] text-gray-400 mt-0.5">{MASTER.role}</p>
+                    </div>
+                    <span className="text-[10px] font-semibold uppercase tracking-widest text-[#E0A98B]">Выбрана</span>
                   </div>
                 </div>
 
@@ -283,7 +269,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
               </p>
               <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-400 max-w-xs mx-auto text-left space-y-1">
                 <p>• Процедура: <span className="text-white">{piercingName}</span></p>
-                <p>• Мастер: <span className="text-white">{MASTERS.find(m => m.id === selectedMaster)?.name}</span></p>
+                <p>• Мастер: <span className="text-white">{MASTER.name}</span></p>
                 <p>• Время: <span className="text-white">{selectedTime}</span></p>
               </div>
               <button

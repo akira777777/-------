@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import ZoneSelector from './components/ZoneSelector';
@@ -43,11 +44,13 @@ export default function Home() {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[650px] bg-[#E0A98B]/5 blur-[150px] rounded-full -z-10" />
         <div className="absolute top-1/4 left-1/4 w-[450px] h-[450px] bg-[#D4AF37]/5 blur-[120px] rounded-full -z-10" />
         
-        <div className="max-w-7xl mx-auto text-center">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="text-center lg:text-left"
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-6 shadow-[0_0_20px_rgba(224,169,139,0.15)]">
               <Sparkles className="w-3.5 h-3.5" />
@@ -59,12 +62,12 @@ export default function Home() {
               <span className="text-gradient">пирсинга и ювелирной эстетики</span>
             </h1>
             
-            <p className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 mb-10 font-body leading-relaxed">
+            <p className="max-w-2xl mx-auto lg:mx-0 text-base sm:text-lg md:text-xl text-gray-400 mb-10 font-body leading-relaxed">
               Безупречная стерильность медицинского уровня, сертифицированный титан ASTM F-136, золото 14k/18k и 
               авторский подбор украшений под индивидуальную геометрию ушей и лица.
             </p>
             
-            <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16">
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4">
               <button 
                 onClick={() => handleOpenBooking()}
                 className="btn-premium bg-[#E0A98B] text-black hover:bg-white transition-all duration-300 font-bold w-full sm:w-auto shadow-[0_0_25px_rgba(224,169,139,0.35)]"
@@ -80,8 +83,33 @@ export default function Home() {
             </div>
           </motion.div>
 
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+            className="relative mx-auto w-full max-w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
+          >
+            <Image
+              src="/images/ear-curation-hero.png"
+              alt="Анатомический сетап с золотым хеликсом и титановым кончем"
+              fill
+              priority
+              sizes="(max-width: 1024px) 90vw, 42vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#E0A98B]">Естественная посадка</p>
+                <p className="text-sm font-heading font-bold text-white mt-1">Украшение следует вашей анатомии</p>
+              </div>
+              <span className="shrink-0 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-[10px] text-gray-200 backdrop-blur">Praha</span>
+            </div>
+          </motion.div>
+          </div>
+
           {/* Trust Badges */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto pt-10 border-t border-white/5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-10 border-t border-white/5 text-center">
             <div className="flex flex-col items-center p-6 glass rounded-2xl border border-white/5 hover:border-[#E0A98B]/20 transition-colors">
               <Shield className="w-6 h-6 text-[#E0A98B] mb-2" />
               <span className="text-[10px] uppercase tracking-widest text-gray-500 mb-1 font-bold">Стерилизация</span>
@@ -166,11 +194,7 @@ export default function Home() {
       />
 
       {/* Masters & Portfolio Section */}
-      <MastersSection 
-        onBookWithMaster={() => {
-          handleOpenBooking();
-        }} 
-      />
+      <MastersSection onBookWithMaster={() => handleOpenBooking()} />
 
       {/* Safety Section */}
       <SafetySection />
@@ -213,7 +237,7 @@ export default function Home() {
             <ul className="space-y-2.5 text-xs">
               <li><button onClick={() => scrollToSection('map')} className="hover:text-gold-rose transition-colors">Карта проколов</button></li>
               <li><button onClick={() => scrollToSection('jewelry')} className="hover:text-gold-rose transition-colors">Витрина украшений</button></li>
-              <li><button onClick={() => scrollToSection('masters')} className="hover:text-gold-rose transition-colors">Мастера и портфолио</button></li>
+              <li><button onClick={() => scrollToSection('masters')} className="hover:text-gold-rose transition-colors">Anastasya и портфолио</button></li>
               <li><button onClick={() => scrollToSection('safety')} className="hover:text-gold-rose transition-colors">Стандарты безопасности</button></li>
               <li><button onClick={() => scrollToSection('aftercare')} className="hover:text-gold-rose transition-colors">Памятка и даунсайз</button></li>
               <li><button onClick={() => scrollToSection('faq')} className="hover:text-gold-rose transition-colors">Вопросы и ответы</button></li>
@@ -225,7 +249,7 @@ export default function Home() {
             <ul className="space-y-3 text-xs text-gray-300">
               <li className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-[#E0A98B] shrink-0" />
-                <span>Москва, ул. Покровка, 14 (м. Чистые пруды)</span>
+                <span>Praha · точный адрес после подтверждения записи</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <Clock className="w-4 h-4 text-[#E0A98B] shrink-0" />
@@ -233,7 +257,7 @@ export default function Home() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#E0A98B] shrink-0" />
-                <span>+7 (495) 800-44-22</span>
+                <span>Связь через Telegram после записи</span>
               </li>
             </ul>
           </div>
@@ -241,7 +265,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-600">
           <p>© 2026 AURA PIERCING STUDIO. Все права защищены.</p>
-          <p>Медицинская лицензия № ЛО-77-01-019842</p>
+          <p>Цены указаны в Kč · Финальная стоимость подтверждается до визита</p>
         </div>
       </footer>
 
