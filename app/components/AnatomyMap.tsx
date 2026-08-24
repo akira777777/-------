@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PIERCINGS } from '../constants/piercings';
+import { PIERCINGS, type ZoneId } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
 
 interface AnatomyMapProps {
-  activeZone: string;
+  activeZone: ZoneId;
   onAddtoConfigurator?: (piercing: any) => void;
 }
 

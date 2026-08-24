@@ -1,14 +1,15 @@
 'use client';
 
 import React from 'react';
+import type { ZoneId } from '../constants/piercings';
 
 interface ZoneSelectorProps {
-  activeZone: string;
-  setActiveZone: (zoneId: string) => void;
+  activeZone: ZoneId;
+  setActiveZone: (zoneId: ZoneId) => void;
 }
 
 export default function ZoneSelector({ activeZone, setActiveZone }: ZoneSelectorProps) {
-  const zones = [
+  const zones: { id: ZoneId; name: string }[] = [
     { id: 'face', name: 'Лицо' },
     { id: 'ear', name: 'Уши' },
     { id: 'body', name: 'Тело' }

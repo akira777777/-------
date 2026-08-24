@@ -7,10 +7,10 @@ import ZoneSelector from './components/ZoneSelector';
 import AnatomyMap from './components/AnatomyMap';
 import JewelryConfigurator from './components/JewelryConfigurator';
 import SafetySection from './components/SafetySection';
-import { ZONES } from './constants/piercings';
+import { ZONES, type ZoneId } from './constants/piercings';
 
 export default function Home() {
-  const [activeZone, setActiveZone] = useState(ZONES[0].id);
+  const [activeZone, setActiveZone] = useState<ZoneId>(ZONES[0].id);
   const [selectedPiercing, setSelectedPiercing] = useState<any>(null);
 
   return (

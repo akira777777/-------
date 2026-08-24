@@ -1,3 +1,5 @@
+export type ZoneId = 'face' | 'ear' | 'body';
+
 export type PiercingType = {
   id: string;
   name: string;
@@ -5,7 +7,7 @@ export type PiercingType = {
   painLevel: number; // 1-5
   jewelryType: 'stud' | 'hoop' | 'barbell' | 'curved_bar';
   basePrice: number;
-  zone: 'face' | 'ear' | 'body';
+  zone: ZoneId;
 };
 
 export const PIERCINGS: PiercingType[] = [
@@ -86,7 +88,7 @@ export const PIERCINGS: PiercingType[] = [
   }
 ];
 
-export const ZONES = [
+export const ZONES: { id: ZoneId; name: string; icon: string }[] = [
   { id: 'face', name: 'Лицо', icon: '👤' },
   { id: 'ear', name: 'Уши', icon: '👂' },
   { id: 'body', name: 'Тело', icon: '✨' }

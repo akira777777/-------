@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES } from '../constants/jewelry_types';
-import { ChevronRight, ChevronLeft, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 
 interface ConfiguratorProps {
   basePiercing: any; // Data from AnatomyMap
