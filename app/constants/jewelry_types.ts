@@ -46,8 +46,8 @@ export const MATERIALS: Material[] = [
 
 export const STONES: Stone[] = [
   { id: 'none', name: 'Без камня', price: 0, color: 'transparent' },
-  { id: 'diamond', name: 'Бриллиант', price: 5000, color: '#FFFFFF' },
-  { id: 'sapphire', name: 'Сапфир', price: 3500, color: '#0F52BA' },
-  { id: 'ruby', name: 'Рубин', price: 4000, color: '#E0115F' },
-  { id: 'emerald', name: 'Изумруд', price: 4500, color: '#50C878' }
+  { id: 'diamond', name: 'Бриллиант', price: 2400, color: '#FFFFFF' },
+  { id: 'sapphire', name: 'Сапфир', price: 1200, color: '#0F52BA' },
+  { id: 'ruby', name: 'Рубин', price: 1450, color: '#E0115F' },
+  { id: 'emerald', name: 'Изумруд', price: 1750, color: '#50C878' }
 ];

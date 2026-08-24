@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
 import { Sparkles, Star, ChevronRight, Eye } from 'lucide-react';
+import { formatCzk } from '../constants/currency';
 
 interface AnatomyMapProps {
   activeZone: ZoneId;
@@ -216,7 +217,7 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator }: AnatomyM
                   <div>
                     <span className="block text-[10px] uppercase text-gray-400">Стоимость от</span>
                     <span className="text-2xl font-bold text-gold-rose">
-                      {selectedPiercing.basePrice.toLocaleString('ru-RU')} ₽
+                      {formatCzk(selectedPiercing.basePrice)}
                     </span>
                   </div>
                   <button

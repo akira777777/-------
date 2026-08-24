@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Shield, Gem, ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
+import { formatCzk } from '../constants/currency';
 
 interface JewelryItem {
   id: string;
@@ -23,7 +25,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'gold',
     material: 'Золото 14K Yellow Gold',
     threading: 'Threadless (Push-Pin)',
-    price: 6800,
+    price: 5900,
     badge: 'Bestseller',
     gem: 'Бриллианты огранки Маркиз',
     colorHex: '#D4AF37'
@@ -34,7 +36,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'opals',
     material: 'Имплантационный титан ASTM F-136',
     threading: 'Threadless (Push-Pin)',
-    price: 3200,
+    price: 1600,
     badge: 'New',
     gem: 'Синтетический белый опал кабошон',
     colorHex: '#E2E8F0'
@@ -45,7 +47,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'clickers',
     material: 'Золото 14K Rose Gold',
     threading: 'Internally Threaded',
-    price: 8400,
+    price: 7200,
     badge: 'Luxury',
     gem: 'Кристаллы Swarovski по кругу',
     colorHex: '#E0A98B'
@@ -56,7 +58,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'clusters',
     material: 'Титан ASTM F-136 (Анодирован)',
     threading: 'Threadless (Push-Pin)',
-    price: 2400,
+    price: 1400,
     gem: 'Тройной фианит в крапанах',
     colorHex: '#C0C0C0'
   },
@@ -66,7 +68,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'gold',
     material: 'Золото 18K Solid Gold',
     threading: 'Threadless (Push-Pin)',
-    price: 11200,
+    price: 9200,
     badge: 'Exclusive',
     gem: 'Гидротермальный изумруд',
     colorHex: '#50C878'
@@ -77,7 +79,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     category: 'opals',
     material: 'Титан F-136 (Deep Purple)',
     threading: 'Threadless (Push-Pin)',
-    price: 3600,
+    price: 1850,
     gem: 'Голубой опал Aurora Borealis',
     colorHex: '#8A2BE2'
   }
@@ -115,6 +117,21 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Каждое изделие изготовлено из гипоаллергенных металлов высшей пробы: имплантационный титан ASTM F-136, золото 14k/18k и натуральные камни с ручной закрепкой.
           </p>
+        </div>
+
+        <div className="relative min-h-[220px] md:min-h-[280px] overflow-hidden rounded-[2rem] border border-white/10 mb-10">
+          <Image
+            src="/images/jewelry-editorial.png"
+            alt="Титановые и золотые украшения для пирсинга на металлическом подносе"
+            fill
+            sizes="(max-width: 768px) 100vw, 1280px"
+            className="object-cover object-center opacity-80"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/35 to-transparent" />
+          <div className="relative z-10 max-w-md p-7 md:p-10">
+            <p className="text-xs uppercase tracking-[0.24em] text-[#E0A98B] font-bold mb-3">Материалы, с которых начинается комфорт</p>
+            <p className="text-lg md:text-2xl font-heading font-bold leading-snug">Только титан ASTM F-136 и проверенное золото для первичного заживления.</p>
+          </div>
         </div>
 
         {/* Категории */}
@@ -190,7 +207,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                 <div className="flex items-center justify-between pt-4 border-t border-white/5">
                   <div>
                     <span className="text-[10px] uppercase text-gray-500 block">Стоимость</span>
-                    <span className="text-xl font-bold text-white">{item.price.toLocaleString('ru-RU')} ₽</span>
+                    <span className="text-xl font-bold text-white">{formatCzk(item.price)}</span>
                   </div>
                   <button
                     onClick={() => onSelectJewelry(item)}

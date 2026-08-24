@@ -18,7 +18,7 @@ export const PIERCINGS: PiercingType[] = [
     description: 'Классический прокол в крыле носа. Идеально подходит для тонких колец или маленьких пусет.',
     painLevel: 2,
     jewelryType: 'hoop',
-    basePrice: 1500,
+    basePrice: 1300,
     zone: 'face'
   },
   {
@@ -27,7 +27,7 @@ export const PIERCINGS: PiercingType[] = [
     description: 'Прокол в перегородке носа. Популярный выбор для крупных колец и декоративных элементов.',
     painLevel: 3,
     jewelryType: 'hoop',
-    basePrice: 1800,
+    basePrice: 1500,
     zone: 'face'
   },
   {
@@ -36,7 +36,7 @@ export const PIERCINGS: PiercingType[] = [
     description: 'Имплантационный прокол под кожей. Требует высокой квалификации мастера.',
     painLevel: 4,
     jewelryType: 'stud',
-    basePrice: 2500,
+    basePrice: 1900,
     zone: 'face'
   },
   // Ear Zone
@@ -74,7 +74,7 @@ export const PIERCINGS: PiercingType[] = [
     description: 'Классический прокол пупка. Подходит для длинных подвесок и колец.',
     painLevel: 3,
     jewelryType: 'barbell',
-    basePrice: 2000,
+    basePrice: 1600,
     zone: 'body'
   },
   {
@@ -83,7 +83,7 @@ export const PIERCINGS: PiercingType[] = [
     description: 'Имплантационный прокол на плече или ключице.',
     painLevel: 4,
     jewelryType: 'stud',
-    basePrice: 3000,
+    basePrice: 2000,
     zone: 'body'
   }
 ];

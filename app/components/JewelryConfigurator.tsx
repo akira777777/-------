@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES } from '../constants/jewelry_types';
+import { formatCzk } from '../constants/currency';
 import { CheckCircle2, Sparkles, Shield, ChevronRight, ChevronLeft, Droplets } from 'lucide-react';
 
 interface ConfiguratorProps {
@@ -19,10 +20,10 @@ interface ConfiguratorProps {
 
 const ANODIZATION_OPTIONS = [
   { id: 'raw', name: 'Натуральный титан (Silver)', color: '#A9A9A9', price: 0 },
-  { id: 'gold', name: 'Анодирование Gold (Золото)', color: '#D4AF37', price: 300 },
-  { id: 'rose', name: 'Анодирование Rose Gold', color: '#E0A98B', price: 300 },
-  { id: 'ice', name: 'Анодирование Ice Blue', color: '#00F2FE', price: 300 },
-  { id: 'violet', name: 'Анодирование Deep Violet', color: '#8A2BE2', price: 300 },
+  { id: 'gold', name: 'Анодирование Gold (Золото)', color: '#D4AF37', price: 150 },
+  { id: 'rose', name: 'Анодирование Rose Gold', color: '#E0A98B', price: 150 },
+  { id: 'ice', name: 'Анодирование Ice Blue', color: '#00F2FE', price: 150 },
+  { id: 'violet', name: 'Анодирование Deep Violet', color: '#8A2BE2', price: 150 },
 ];
 
 export default function JewelryConfigurator({ basePiercing, onBookSetup }: ConfiguratorProps) {
@@ -33,7 +34,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
   const [withCareKit, setWithCareKit] = useState(false);
 
   // Расчет стоимости
-  const careKitPrice = withCareKit ? 650 : 0;
+  const careKitPrice = withCareKit ? 390 : 0;
   const baseMultiplied = Math.round(basePiercing.basePrice * selectedMaterial.basePriceMultiplier);
   const totalPrice = baseMultiplied + selectedStone.price + selectedAnodization.price + careKitPrice;
 
@@ -176,7 +177,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
                   </div>
                   <span className="font-bold text-sm text-white">{s.name}</span>
                   <p className="text-xs text-[#E0A98B] mt-1 font-semibold">
-                    {s.price === 0 ? 'Без доплаты' : `+${s.price.toLocaleString('ru-RU')} ₽`}
+                    {s.price === 0 ? 'Без доплаты' : `+${formatCzk(s.price)}`}
                   </p>
                 </button>
               ))}
@@ -231,7 +232,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
                     <span className="w-4 h-4 rounded-full border border-white/20 shrink-0" style={{ backgroundColor: opt.color }} />
                     <div className="truncate">
                       <p className="text-xs font-bold text-white truncate">{opt.name}</p>
-                      <p className="text-[10px] text-gray-400">{opt.price === 0 ? 'Включено' : `+${opt.price} ₽`}</p>
+                      <p className="text-[10px] text-gray-400">{opt.price === 0 ? 'Включено' : `+${formatCzk(opt.price)}`}</p>
                     </div>
                   </button>
                 ))}
@@ -257,7 +258,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
                 </div>
               </div>
               <div className="text-right">
-                <span className="text-sm font-bold text-[#00F2FE]">+650 ₽</span>
+                <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(careKitPrice)}</span>
                 <span className="block text-[10px] text-gray-500">{withCareKit ? 'Выбрано' : 'Нажмите для выбора'}</span>
               </div>
             </div>
@@ -311,13 +312,13 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
               {withCareKit && (
                 <div className="flex justify-between items-center border-b border-white/5 pb-3">
                   <span className="text-xs text-gray-400">Уход Brine Healer:</span>
-                  <span className="text-sm font-bold text-[#00F2FE]">+650 ₽</span>
+                  <span className="text-sm font-bold text-[#00F2FE]">+{formatCzk(careKitPrice)}</span>
                 </div>
               )}
               <div className="flex justify-between items-center pt-2">
                 <span className="text-base font-semibold text-gray-300">Итого «Всё включено»:</span>
                 <span className="text-3xl sm:text-4xl font-bold text-gold-rose">
-                  {totalPrice.toLocaleString('ru-RU')} ₽
+                  {formatCzk(totalPrice)}
                 </span>
               </div>
             </div>
