@@ -11,7 +11,7 @@ const montserrat = Montserrat({
 });
 
 const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
+  subsets: ['latin', 'latin-ext', 'cyrillic-ext'],
   variable: '--font-jakarta',
   weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',

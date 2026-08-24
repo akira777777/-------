@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PIERCINGS, type PiercingType } from '../constants/piercings';
-import { useCurrency } from '../constants/currency';
+import { PIERCINGS, type PiercingType } from '@/constants/piercings';
+import { useCurrency } from '@/constants/currency';
 import { Sparkles, Layers, Trash2, CheckCircle2, Droplets } from 'lucide-react';
-import type { BookingData } from './BookingModal';
+import type { BookingData } from '@/components/BookingModal';
 
 interface EarProjectBuilderProps {
   onBookProject: (data: BookingData) => void;

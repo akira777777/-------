@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TESTIMONIALS } from '../constants/testimonials';
+import { TESTIMONIALS } from '@/constants/testimonials';
 import { Star, CheckCircle, Heart } from 'lucide-react';
 
 export default function TestimonialsSection() {

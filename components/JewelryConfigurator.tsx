@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MATERIALS, STONES, SILHOUETTES, ANODIZATION_PRESETS, type Material, type Stone, type SilhouetteConfig } from '../constants/jewelry_types';
-import { useCurrency } from '../constants/currency';
-import type { PiercingType } from '../constants/piercings';
+import { MATERIALS, STONES, SILHOUETTES, ANODIZATION_PRESETS, type Material, type Stone, type SilhouetteConfig } from '@/constants/jewelry_types';
+import { useCurrency } from '@/constants/currency';
+import type { PiercingType } from '@/constants/piercings';
 import { Sparkles, ChevronRight, Droplets, RotateCw, Wand2 } from 'lucide-react';
 
 interface ConfiguratorProps {

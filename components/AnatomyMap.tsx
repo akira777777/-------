@@ -2,10 +2,10 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
-import { ZONE_PATHS } from '../constants/svg_assets';
+import { PIERCINGS, type ZoneId, type PiercingType } from '@/constants/piercings';
+import { ZONE_PATHS } from '@/constants/svg_assets';
 import { Sparkles, Eye, HeartPulse, Layers } from 'lucide-react';
-import { useCurrency } from '../constants/currency';
+import { useCurrency } from '@/constants/currency';
 
 interface AnatomyMapProps {
   activeZone: ZoneId;

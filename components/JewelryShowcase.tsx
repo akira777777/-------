@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gem, ArrowUpRight, Search } from 'lucide-react';
 import Image from 'next/image';
-import { useCurrency } from '../constants/currency';
+import { useCurrency } from '@/constants/currency';
 
 interface JewelryItem {
   id: string;

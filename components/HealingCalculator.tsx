@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { PIERCINGS, type PiercingType } from '../constants/piercings';
+import { PIERCINGS, type PiercingType } from '@/constants/piercings';
 import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle, CalendarPlus, Activity } from 'lucide-react';
 
 interface HealingCalculatorProps {

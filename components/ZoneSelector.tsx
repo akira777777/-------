@@ -2,7 +2,7 @@
 
 import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ZONES, type ZoneId } from '../constants/piercings';
+import { ZONES, type ZoneId } from '@/constants/piercings';
 
 interface ZoneSelectorProps {
   activeZone: ZoneId;
@@ -32,7 +32,7 @@ export default function ZoneSelector({ activeZone, setActiveZone }: ZoneSelector
       <div 
         role="tablist" 
         aria-label="Анатомические зоны проколов"
-        className="p-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-xl flex items-center justify-between gap-1 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+        className="p-1 sm:p-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-xl flex items-center justify-between gap-1 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
       >
         {ZONES.map((zone, idx) => {
           const isActive = activeZone === zone.id;
@@ -48,7 +48,7 @@ export default function ZoneSelector({ activeZone, setActiveZone }: ZoneSelector
               tabIndex={isActive ? 0 : -1}
               onClick={() => setActiveZone(zone.id)}
               onKeyDown={(e) => handleKeyDown(e, idx)}
-              className={`relative flex-1 py-3 px-3 sm:px-5 rounded-full transition-colors duration-200 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 sm:gap-2.5 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0A98B] ${
+              className={`relative flex-1 py-2 sm:py-3 px-1.5 xs:px-2.5 sm:px-4 rounded-full transition-colors duration-200 text-[11px] xs:text-xs sm:text-sm font-semibold flex items-center justify-center gap-1 sm:gap-2 z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0A98B] ${
                 isActive ? 'text-black' : 'text-gray-400 hover:text-white'
               }`}
             >

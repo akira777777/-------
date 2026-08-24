@@ -3,8 +3,8 @@
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { X, Calendar, Clock, User, Phone, Sparkles, CheckCircle2, MessageSquare, Send, Copy, Check } from 'lucide-react';
-import type { PiercingType } from '../constants/piercings';
-import { useCurrency } from '../constants/currency';
+import type { PiercingType } from '@/constants/piercings';
+import { useCurrency } from '@/constants/currency';
 
 export interface BookingData {
   piercing?: PiercingType | null;
