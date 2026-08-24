@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Gem, ArrowUpRight, Search, SlidersHorizontal } from 'lucide-react';
+import { Sparkles, Gem, ArrowUpRight, Search } from 'lucide-react';
 import Image from 'next/image';
 import { useCurrency } from '../constants/currency';
 

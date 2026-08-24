@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react';
+import { motion } from 'framer-motion';
 import { TESTIMONIALS } from '../constants/testimonials';
-import { Star, MessageSquare, CheckCircle, ShieldCheck, Heart } from 'lucide-react';
+import { Star, CheckCircle, Heart } from 'lucide-react';
 
 export default function TestimonialsSection() {
-  const [activeFilter, setActiveFilter] = useState<'all' | 'curation' | 'healing'>('all');
-
   return (
     <section id="testimonials" className="py-24 px-4 sm:px-6 bg-surface/15 border-t border-white/5 relative overflow-hidden">
       {/* Фоновое свечение */}

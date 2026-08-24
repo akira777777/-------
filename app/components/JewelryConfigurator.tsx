@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES, SILHOUETTES, ANODIZATION_PRESETS, type Material, type Stone, type SilhouetteConfig } from '../constants/jewelry_types';
 import { useCurrency } from '../constants/currency';
 import type { PiercingType } from '../constants/piercings';
-import { CheckCircle2, Sparkles, ChevronRight, Droplets, RotateCw, ZoomIn, ShieldCheck } from 'lucide-react';
+import { Sparkles, ChevronRight, Droplets, RotateCw } from 'lucide-react';
 
 interface ConfiguratorProps {
   basePiercing: PiercingType;
