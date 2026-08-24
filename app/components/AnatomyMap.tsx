@@ -18,18 +18,18 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator }: AnatomyM
   // Пример координат Hotspots (в реальном проекте эти координаты могут быть частью данных в piercings.ts)
   const hotspots: Record<string, { id: string; x: number; y: number }[]> = {
     face: [
-      { id: 'nose', x: 45, y: 40 },
-      { id: 'lip', x: 35, y: 65 },
-      { id: 'cheek', x: 70, y: 50 }
+      { id: 'f1', x: 45, y: 40 },
+      { id: 'f2', x: 35, y: 65 },
+      { id: 'f3', x: 70, y: 50 }
     ],
     ear: [
-      { id: 'helix', x: 35, y: 25 },
-      { id: 'tragus', x: 75, y: 65 },
-      { id: 'conch', x: 90, y: 45 }
+      { id: 'e1', x: 35, y: 25 },
+      { id: 'e2', x: 75, y: 65 },
+      { id: 'e3', x: 90, y: 45 }
     ],
     body: [
-      { id: 'navel', x: 50, y: 55 },
-      { id: 'sternum', x: 50, y: 30 }
+      { id: 'b1', x: 50, y: 55 },
+      { id: 'b2', x: 50, y: 30 }
     ]
   };
 
