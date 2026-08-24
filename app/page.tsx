@@ -8,6 +8,7 @@ import Navbar from '@/components/Navbar';
 import ZoneSelector from '@/components/ZoneSelector';
 import AnatomyMap from '@/components/AnatomyMap';
 import EarProjectBuilder from '@/components/EarProjectBuilder';
+import EditorialGallery from '@/components/EditorialGallery';
 import JewelryShowcase from '@/components/JewelryShowcase';
 import HealingCalculator from '@/components/HealingCalculator';
 import MastersSection from '@/components/MastersSection';
@@ -270,6 +271,9 @@ function HomeContent() {
         onBookProject={(projectData) => handleOpenBooking(projectData)} 
       />
 
+      {/* Editorial Inspiration Gallery */}
+      <EditorialGallery onOpenBooking={() => handleOpenBooking()} />
+
       {/* Jewelry Showcase Section */}
       <JewelryShowcase 
         onSelectJewelry={(item) => {
@@ -364,6 +368,7 @@ function HomeContent() {
             <ul className="space-y-2.5 text-xs">
               <li><button onClick={() => scrollToSection('map')} className="hover:text-gold-rose transition-colors">Карта проколов</button></li>
               <li><button onClick={() => scrollToSection('ear-curation')} className="hover:text-gold-rose transition-colors">Сет-билдер уха</button></li>
+              <li><button onClick={() => scrollToSection('editorial')} className="hover:text-gold-rose transition-colors">Визуальное вдохновение</button></li>
               <li><button onClick={() => scrollToSection('jewelry')} className="hover:text-gold-rose transition-colors">Витрина украшений</button></li>
               <li><button onClick={() => scrollToSection('healing')} className="hover:text-gold-rose transition-colors">Календарь заживления</button></li>
               <li><button onClick={() => scrollToSection('masters')} className="hover:text-gold-rose transition-colors">Anastasya & Портфолио</button></li>
