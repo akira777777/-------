@@ -1,93 +1,127 @@
+'use client';
+
 import React from 'react';
-import { ShieldCheck, Droplets, Clock, RefreshCw } from 'lucide-react';
+import { ShieldCheck, Droplets, Clock, RefreshCw, Sparkles, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AftercareDownsize() {
   const careSteps = [
     {
-      title: "Гигиена",
-      description: "Очищайте прокол 2 раза в день с использованием физиологического раствора. Избегайте агрессивных антисептиков, которые могут повредить ткани.",
-      icon: <Droplets className="w-6 h-6 text-[#E0A98B]" />,
+      title: 'Изотонический уход',
+      description: 'Орошайте прокол 2 раза в день стерильным физраствором или спреем Brine Healer. Аккуратно просушивайте нетканой салфеткой.',
+      icon: <Droplets className="w-6 h-6 text-[#00F2FE]" />,
+      badge: 'Ежедневно'
     },
     {
-      title: "Сон и одежда",
-      description: "Старайтесь не спать на стороне прокола в первые 2 недели. Выбирайте свободную одежду из натуральных тканей, чтобы избежать трения.",
+      title: 'Режим сна и ткани',
+      description: 'Не спите на стороне свежего прокола (используйте подушку-бублик). Выбирайте натуральные гладкие ткани без выступающих петель.',
       icon: <Clock className="w-6 h-6 text-[#E0A98B]" />,
+      badge: 'Первые 14 дней'
     },
     {
-      title: "Питание",
-      description: "В первые дни после процедуры рекомендуется избегать продуктов с высоким содержанием соли и острого, чтобы минимизировать отек.",
-      icon: <ShieldCheck className="w-6 h-6 text-[#E0A98B]" />,
+      title: 'Что под запретом',
+      description: 'Категорически запрещены: спирт, перекись водорода, мази, прокручивание сережки, посещение бань, саун и открытых водоемов.',
+      icon: <AlertTriangle className="w-6 h-6 text-[#F38181]" />,
+      badge: 'Строгий запрет'
     },
   ];
 
   return (
-    <section className="py-24 px-6 bg-black/50">
+    <section id="aftercare" className="py-24 px-6 bg-black/40 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-heading font-bold mb-4">Уход и Обслуживание</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">Ваш комфорт и красота — наш приоритет. Правильный уход гарантирует быстрое заживление и идеальный результат.</p>
+          <span className="badge-luxury mb-3">
+            <Sparkles className="w-3.5 h-3.5" />
+            Забота и Сопровождение
+          </span>
+          <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
+            Гайд по заживлению & Даунсайз
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
+            Мы ведем каждого клиента до полного формирования канала. Правильный уход гарантирует идеальный эстетический результат.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-24">
+        {/* 3 карточки ухода */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {careSteps.map((step, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass p-8 rounded-[2rem] border border-white/5"
+              className="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between"
             >
-              <div className="mb-4 bg-[#E0A98B]/10 w-fit p-3 rounded-full">
-                {step.icon}
+              <div>
+                <div className="flex justify-between items-center mb-6">
+                  <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                    {step.icon}
+                  </div>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300">
+                    {step.badge}
+                  </span>
+                </div>
+                <h3 className="text-xl font-heading font-bold text-white mb-3">{step.title}</h3>
+                <p className="text-xs text-gray-300 leading-relaxed">
+                  {step.description}
+                </p>
               </div>
-              <h3 className="text-xl font-heading font-bold mb-4">{step.title}</h3>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {step.description}
-              </p>
             </motion.div>
           ))}
         </div>
 
-        <div className="glass p-12 rounded-[3rem] border border-[#E0A98B]/20 bg-[#E0A98B]/5">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            <div className="md:w-1/2">
-              <h3 className="text-3xl font-heading font-bold mb-6 text-[#E0A98B]">Downsizing (Снижение размера)</h3>
-              <p className="text-gray-400 leading-relaxed mb-6">
-                По мере заживления прокола украшение необходимо менять на более маленькое. 
-                Это критически важно для предотвращения травматизации канала и обеспечения комфорта при ношении пирсинга в повседневной жизни.
+        {/* Большой интерактивный блок Downsizing */}
+        <div className="glass-card p-8 md:p-12 rounded-[2.5rem] border border-[#E0A98B]/30 bg-gradient-to-br from-[#E0A98B]/10 via-transparent to-transparent">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div className="lg:col-span-7">
+              <span className="text-xs font-mono uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">
+                Ключевой этап заживления
+              </span>
+              <h3 className="text-2xl sm:text-4xl font-heading font-bold mb-4 text-white">
+                Зачем нужен Downsize (Даунсайз)?
+              </h3>
+              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
+                При первичном проколе мастер устанавливает удлиненную основу (лабрет) с запасом под естественный отек. 
+                Через 3–4 недели отек спадает, и сережка становится длинной. Если вовремя не заменить её на короткую, 
+                украшение наклонится под весом или одеждой, что приведет к кривому заживлению и образованию гранулем.
               </p>
-              <ul className="space-y-4 text-sm text-gray-300">
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#E0A98B] rounded-full" /> 
-                  Плановое обслуживание каждые 4-6 месяцев
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-[#E0A98B] rounded-full" /> 
-                  Профессиональная замена украшения в студии
-                </li>
-              </ul>
-            </div>
-            <div className="md:w-1/2 bg-white/5 p-8 rounded-[2rem] border border-white/10">
-              <div className="flex items-center gap-4 mb-6 text-[#E0A98B]">
-                <RefreshCw className="w-6 h-6" />
-                <span className="font-heading font-bold">График обслуживания</span>
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2.5 text-xs text-gray-200">
+                  <CheckCircle2 className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                  <span>Бесплатная замена основы в студии для всех клиентов AURA</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-xs text-gray-200">
+                  <CheckCircle2 className="w-4 h-4 text-[#E0A98B] shrink-0" />
+                  <span>Ультразвуковая чистка украшений и антисептический осмотр</span>
+                </div>
               </div>
-              <div className="space-y-3">
+            </div>
+
+            <div className="lg:col-span-5 bg-black/50 p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl">
+              <div className="flex items-center gap-3 mb-6 text-[#E0A98B]">
+                <RefreshCw className="w-5 h-5 animate-spin [animation-duration:8s]" />
+                <span className="font-heading font-bold text-sm text-white">График планового обслуживания</span>
+              </div>
+              
+              <div className="space-y-4">
                 {[
-                  { month: "1 Месяц", action: "Проверка заживления и первая смена размера" },
-                  { month: "6 Месяцев", action: "Регулярное обслуживание и чистка канала" },
-                  { month: "12 Месяцев", action: "Полная ревизия украшений и стерилизации" }
+                  { time: '3–4 недели', title: 'Обязательный Даунсайз', desc: 'Замена длинного лабрета на анатомический размер' },
+                  { time: '3–6 месяцев', title: 'Первичная стабилизация', desc: 'Формирование канала, возможность смены накрутки' },
+                  { time: '12 месяцев', title: 'Полное созревание', desc: 'Установка колец, кликеров и тяжелых золотых сетапов' }
                 ].map((item, i) => (
-                  <div key={i} className="flex justify-between border-b border-white/5 pb-2">
-                    <span className="text-gray-400">{item.month}</span>
-                    <span className="font-medium">{item.action}</span>
+                  <div key={i} className="border-b border-white/5 pb-3 last:border-none last:pb-0">
+                    <div className="flex justify-between items-center mb-1">
+                      <span className="text-xs font-bold text-white">{item.title}</span>
+                      <span className="text-[11px] font-mono text-[#E0A98B] font-bold">{item.time}</span>
+                    </div>
+                    <p className="text-[11px] text-gray-400">{item.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </section>
   );
