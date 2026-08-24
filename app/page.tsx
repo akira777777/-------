@@ -1,4 +1,7 @@
+ 'use client';
+
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import ZoneSelector from './components/ZoneSelector';
 import AnatomyMap from './components/AnatomyMap';
