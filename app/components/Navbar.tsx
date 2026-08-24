@@ -35,7 +35,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             Витрина украшений
           </button>
           <button onClick={() => scrollTo('masters')} className="text-gray-300 hover:text-gold-rose transition-colors">
-            Мастера & Портфолио
+            Anastasya & Портфолио
           </button>
           <button onClick={() => scrollTo('safety')} className="text-gray-300 hover:text-gold-rose transition-colors">
             Безопасность
@@ -83,7 +83,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             Витрина украшений
           </button>
           <button onClick={() => scrollTo('masters')} className="block w-full text-left py-2 text-gray-200 hover:text-gold-rose">
-            Мастера & Портфолио
+            Anastasya & Портфолио
           </button>
           <button onClick={() => scrollTo('safety')} className="block w-full text-left py-2 text-gray-200 hover:text-gold-rose">
             Безопасность

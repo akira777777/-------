@@ -16,8 +16,8 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'AURA Piercing Studio | Анатомический пирсинг & Ювелирная эстетика',
-  description: 'Премиальная студия пирсинга: имплантационный титан ASTM F-136, 100% стерильность, интерактивная карта проколов и конфигуратор украшений.',
+  title: 'AURA Piercing Studio Praha | Anastasya',
+  description: 'Анатомический пирсинг и ювелирная эстетика в Праге: титан ASTM F-136, безопасные протоколы и личное сопровождение от Anastasya.',
 };
 
 export default function RootLayout({
