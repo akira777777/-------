@@ -5,3 +5,5 @@ export const formatCzk = (amount: number) =>
     currencyDisplay: 'narrowSymbol',
     maximumFractionDigits: 0,
   }).format(amount);
+
+export const formatPrice = formatCzk;

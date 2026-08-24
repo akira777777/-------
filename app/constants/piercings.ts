@@ -14,76 +14,76 @@ export const PIERCINGS: PiercingType[] = [
   // Face Zone
   {
     id: 'f1',
-    name: 'Носовое кольцо (Nostril)',
+    name: 'Носовое крыло (Nostril)',
     description: 'Классический прокол в крыле носа. Идеально подходит для тонких колец или маленьких пусет.',
     painLevel: 2,
     jewelryType: 'hoop',
-    basePrice: 1300,
+    basePrice: 750,
     zone: 'face'
   },
   {
     id: 'f2',
     name: 'Септум (Septum)',
-    description: 'Прокол в перегородке носа. Популярный выбор для крупных колец и декоративных элементов.',
+    description: 'Прокол в перегородке носа. Популярный выбор для кликеров, колец и декоративных элементов.',
     painLevel: 3,
     jewelryType: 'hoop',
-    basePrice: 1500,
+    basePrice: 850,
     zone: 'face'
   },
   {
     id: 'f3',
-    name: 'Микродерма (Dermal)',
+    name: 'Микродермал (Dermal)',
     description: 'Имплантационный прокол под кожей. Требует высокой квалификации мастера.',
     painLevel: 4,
     jewelryType: 'stud',
-    basePrice: 1900,
+    basePrice: 1100,
     zone: 'face'
   },
   // Ear Zone
   {
     id: 'e1',
     name: 'Хеликс (Helix)',
-    description: 'Прокол верхнего края ушной раковины. Популярно для создания каскадных композиций.',
+    description: 'Прокол верхнего хряща ушной раковины. Популярно для создания каскадных композиций.',
     painLevel: 2,
     jewelryType: 'curved_bar',
-    basePrice: 1200,
+    basePrice: 650,
     zone: 'ear'
   },
   {
     id: 'e2',
     name: 'Трагус (Tragus)',
-    description: 'Прокол передней части ушной раковины. Идеально для маленьких пусет.',
+    description: 'Прокол козелка ушной раковины. Идеально для миниатюрных кристаллов и пусет.',
     painLevel: 3,
     jewelryType: 'stud',
-    basePrice: 1200,
+    basePrice: 650,
     zone: 'ear'
   },
   {
     id: 'e3',
     name: 'Конч (Conch)',
-    description: 'Прокол центральной части ушной раковины. Подходит для крупных колец и пусет.',
+    description: 'Прокол центральной раковины уха. Подходит для крупных колец и кластеров.',
     painLevel: 3,
     jewelryType: 'hoop',
-    basePrice: 1400,
+    basePrice: 750,
     zone: 'ear'
   },
   // Body Zone
   {
     id: 'b1',
     name: 'Пупок (Navel)',
-    description: 'Классический прокол пупка. Подходит для длинных подвесок и колец.',
+    description: 'Классический анатомический прокол пупка с изогнутым бананом или подвеской.',
     painLevel: 3,
     jewelryType: 'barbell',
-    basePrice: 1600,
+    basePrice: 900,
     zone: 'body'
   },
   {
     id: 'b2',
-    name: 'Микродерма (Body Dermal)',
-    description: 'Имплантационный прокол на плече или ключице.',
+    name: 'Ключица (Body Dermal)',
+    description: 'Имплантационный микродермал в зоне ключицы или яремной впадины.',
     painLevel: 4,
     jewelryType: 'stud',
-    basePrice: 2000,
+    basePrice: 1200,
     zone: 'body'
   }
 ];
