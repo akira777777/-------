@@ -1,36 +1,40 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Activity, Info, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ShieldCheck, Award, Activity, Info, Sparkles, CheckCircle2, Flame, Lock } from 'lucide-react';
 
 export default function SafetySection() {
   const protocols = [
     {
       title: 'Медицинская автоклавация',
       subtitle: 'Класс B (134°C, фракционный вакуум)',
-      description: 'Все многоразовые инструменты проходят 4-ступенчатую обработку и вскрываются из индивидуальных крафт-пакетов строго в вашем присутствии.',
-      icon: <ShieldCheck className="w-8 h-8 text-[#E0A98B]" />,
+      description: 'Все многоразовые инструменты проходят 4-ступенчатую дезинфекцию и стерилизуются в автоклаве EN 13060. Индивидуальный крафт-пакет вскрывается строго при вас.',
+      icon: <ShieldCheck className="w-7 h-7 text-[#E0A98B]" />,
       stats: '100% стерильность'
     },
     {
       title: 'Имплантационный титан',
       subtitle: 'Стандарт ASTM F-136 / ISO 5832-3',
-      description: 'Мы не используем опасную хирургическую сталь. Только биосовместимый титан высокой очистки без примесей аллергенного никеля.',
-      icon: <Award className="w-8 h-8 text-[#D4AF37]" />,
+      description: 'Используем биосовместимый титан высокой чистоты Ti-6Al-4V ELI и золото 14K/18K. Без токсичного никеля, окисления и аллергических реакций.',
+      icon: <Award className="w-7 h-7 text-[#D4AF37]" />,
       stats: '0% никеля'
     },
     {
       title: 'Лазерная заточка игл',
-      subtitle: 'Одноразовые катетеры и лезвия',
-      description: 'Трехгранная микро-заточка раздвигает волокна кожи без разрыва тканей. Никаких пистолетов — минимальный отек и быстрое заживление.',
-      icon: <Activity className="w-8 h-8 text-[#00F2FE]" />,
-      stats: 'Без травматизма'
+      subtitle: 'Одноразовые катетеры и блейды',
+      description: 'Специальная трехгранная заточка бережно раздвигает волокна кожи, не вырывая ткани. Прокол заживает в 2 раза быстрее, чем после пистолета.',
+      icon: <Activity className="w-7 h-7 text-[#00F2FE]" />,
+      stats: 'Минимальный отек'
     },
   ];
 
   return (
-    <section id="safety" className="py-24 px-6 bg-surface/10 border-t border-white/5 relative">
+    <section id="safety" className="py-24 px-6 bg-surface/10 border-t border-white/5 relative overflow-hidden">
+      {/* Фоновые градиенты */}
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#E0A98B]/5 blur-[160px] rounded-full pointer-events-none" />
+
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <span className="badge-luxury mb-3">
@@ -38,11 +42,48 @@ export default function SafetySection() {
             Медицинский регламент
           </span>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
-            Безопасность и Стандарты
+            Безопасность и Хирургические Стандарты
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Ваше здоровье и спокойствие — абсолютный приоритет. Мы объединили ювелирное искусство с протоколами хирургической стерильности.
+            Ваше здоровье и спокойствие — абсолютный приоритет. Мы объединили ювелирное искусство с протоколами больничной стерильности.
           </p>
+        </div>
+
+        {/* Большой визуальный блок с фото стерильного сетапа */}
+        <div className="mb-14 relative min-h-[280px] md:min-h-[360px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
+          <Image
+            src="/images/sterile-procedure-tray.jpg"
+            alt="Стерильный хирургический лоток с крафт-пакетом, титановым украшением ASTM F-136 и одноразовой иглой лазерной заточки"
+            fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+          <div className="relative z-10 max-w-xl p-8 md:p-12 flex flex-col justify-center h-full">
+            <div className="flex items-center gap-2 mb-3">
+              <Lock className="w-4 h-4 text-[#00F2FE]" />
+              <span className="text-[10px] uppercase tracking-[0.24em] font-bold text-[#00F2FE]">
+                Индивидуальный крафт-пакет
+              </span>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-heading font-bold text-white mb-3">
+              Вскрытие упаковки исключительно при вас
+            </h3>
+            <p className="text-xs md:text-sm text-gray-300 leading-relaxed mb-4">
+              Каждое украшение и одноразовый инструмент запечатываются в термостойкий пакет с химическим индикатором стерилизации, который меняет цвет при достижении 134°C в автоклаве.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-white backdrop-blur">
+                ✓ Класс B EN 13060
+              </span>
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-white backdrop-blur">
+                ✓ Одноразовые стерильные перчатки
+              </span>
+              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-[#D4AF37] backdrop-blur">
+                ✓ ISO 5832-3 Titanium
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* 3 карточки стандартов */}
@@ -54,10 +95,10 @@ export default function SafetySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between group hover:border-[#E0A98B]/40 transition-all duration-300"
+              className="glass-card p-8 rounded-[2.5rem] flex flex-col justify-between group hover:border-[#E0A98B]/40 transition-all duration-300 shadow-xl"
             >
               <div>
-                <div className="mb-6 w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <div className="mb-6 w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
                   {item.icon}
                 </div>
                 <span className="text-[10px] uppercase font-mono tracking-widest text-[#E0A98B] font-bold block mb-1">
@@ -72,7 +113,7 @@ export default function SafetySection() {
               </div>
 
               <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-xs">
-                <span className="text-gray-500 font-mono">Стандарт безопасности</span>
+                <span className="text-gray-500 font-mono">Контроль</span>
                 <span className="text-white font-bold font-mono">{item.stats}</span>
               </div>
             </motion.div>
@@ -80,7 +121,7 @@ export default function SafetySection() {
         </div>
 
         {/* Баннер подготовки */}
-        <div className="mt-14 p-8 glass-card rounded-[2.5rem] border border-[#E0A98B]/20 bg-gradient-to-r from-[#E0A98B]/10 to-transparent">
+        <div className="mt-14 p-8 glass-card rounded-[2.5rem] border border-[#E0A98B]/20 bg-gradient-to-r from-[#E0A98B]/10 to-transparent shadow-xl">
           <div className="flex flex-col md:flex-row items-center gap-6">
             <div className="w-14 h-14 rounded-2xl bg-[#E0A98B] text-black flex items-center justify-center shrink-0 shadow-[0_0_25px_rgba(224,169,139,0.4)]">
               <Info className="w-7 h-7" />
@@ -90,7 +131,7 @@ export default function SafetySection() {
                 Памятка перед визитом в студию
               </h3>
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed max-w-4xl">
-                Рекомендуем плотно поесть за 1–2 часа до процедуры (для стабильного уровня сахара), воздержаться от алкоголя и кофеина накануне, а также надеть удобную одежду, не сдавливающую зону будущего прокола.
+                Рекомендуем плотно поесть за 1–2 часа до процедуры (для поддержания стабильного уровня сахара), воздержаться от алкоголя и кофеина накануне, а также надеть удобную свободную одежду, не сдавливающую зону будущего прокола.
               </p>
             </div>
           </div>

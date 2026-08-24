@@ -87,23 +87,39 @@ export default function Home() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="relative mx-auto w-full max-w-[500px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.45)]"
+            className="relative mx-auto w-full max-w-[520px] aspect-[4/5] rounded-[2.5rem] overflow-hidden border border-white/15 shadow-[0_30px_90px_rgba(0,0,0,0.6)] group"
           >
             <Image
-              src="/images/ear-curation-hero.png"
-              alt="Анатомический сетап с золотым хеликсом и титановым кончем"
+              src="/images/curated-ear-styling.jpg"
+              alt="Анатомический сетап с золотым хеликсом Marquise и титановым кончем от мастера Anastasya"
               fill
               priority
               sizes="(max-width: 1024px) 90vw, 42vw"
-              className="object-cover"
+              className="object-cover transition-transform duration-700 group-hover:scale-105"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+            
+            {/* Верхний плавающий бейдж */}
+            <div className="absolute top-5 left-5 right-5 flex items-center justify-between">
+              <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/10 flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#E0A98B] animate-ping" />
+                <span className="text-[11px] font-semibold text-white">Anastasya Studio</span>
+              </div>
+              <span className="shrink-0 rounded-full border border-white/20 bg-black/60 px-3.5 py-1.5 text-[11px] text-[#D4AF37] font-mono backdrop-blur-md">
+                Prague · 2026
+              </span>
+            </div>
+
+            {/* Нижний информационный оверлей */}
             <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between gap-4">
               <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#E0A98B]">Естественная посадка</p>
-                <p className="text-sm font-heading font-bold text-white mt-1">Украшение следует вашей анатомии</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#E0A98B]">Ear Curation Project</p>
+                <p className="text-base font-heading font-bold text-white mt-1">Marquise 14K Gold &amp; Opal Cluster</p>
               </div>
-              <span className="shrink-0 rounded-full border border-white/20 bg-black/30 px-3 py-1.5 text-[10px] text-gray-200 backdrop-blur">Praha</span>
+              <div className="text-right">
+                <span className="text-[9px] uppercase tracking-wider text-gray-400 block">Анатомия</span>
+                <span className="text-xs font-bold text-white">100% Custom</span>
+              </div>
             </div>
           </motion.div>
           </div>
