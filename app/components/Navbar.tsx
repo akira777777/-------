@@ -12,8 +12,15 @@ interface NavbarProps {
 export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { currency, setCurrency } = useCurrency();
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
@@ -46,8 +53,8 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const currencyOptions: CurrencyCode[] = ['CZK', 'EUR', 'USD'];
 
   return (
-    <nav className="fixed top-0 w-full z-40 px-3 sm:px-6 py-3 sm:py-4 transition-all">
-      <div className="max-w-7xl mx-auto glass rounded-2xl px-4 sm:px-6 py-3 flex justify-between items-center border border-white/10 backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)]">
+    <nav className={`fixed top-0 w-full z-40 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300 ${scrolled ? 'bg-black/30' : ''}`}>
+      <div className={`max-w-7xl mx-auto glass rounded-2xl px-4 sm:px-6 py-3 flex justify-between items-center border backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] transition-all duration-300 ${scrolled ? 'border-white/15 shadow-[0_10px_40px_rgba(0,0,0,0.7)]' : 'border-white/10'}`}>
         {/* Логотип */}
         <Link href="/" className="text-lg sm:text-2xl font-heading font-bold tracking-tight text-gold-rose flex items-center gap-2 group">
           <span className="bg-gradient-to-r from-white via-[#E0A98B] to-[#D4AF37] bg-clip-text text-transparent group-hover:brightness-110 transition-all">

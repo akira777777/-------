@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
@@ -37,7 +37,14 @@ function HomeContent() {
   const [selectedPiercing, setSelectedPiercing] = useState<PiercingType | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [bookingData, setBookingData] = useState<BookingData | null>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const { currency } = useCurrency();
+
+  useEffect(() => {
+    const handleScroll = () => setShowScrollTop(window.scrollY > 400);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = useCallback((id: string) => {
     const element = document.getElementById(id);
@@ -379,8 +386,19 @@ function HomeContent() {
         </div>
       </footer>
 
-      {/* Floating Quick Action Button */}
+      {/* Floating Action Buttons */}
       <div className="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-3">
+        {/* Scroll to Top */}
+        {showScrollTop && (
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-gray-300 hover:text-white transition-all duration-300 backdrop-blur-md shadow-lg"
+            aria-label="Наверх"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+          </button>
+        )}
+        {/* Quick Booking FAB */}
         <button
           onClick={() => handleOpenBooking()}
           className="group flex items-center gap-2 bg-[#E0A98B] hover:bg-white text-black font-bold p-3.5 rounded-full shadow-[0_0_25px_rgba(224,169,139,0.4)] transition-all duration-300 hover:scale-105"
