@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
-import { Sparkles, Eye, Clock, ShieldCheck, HeartPulse, ChevronRight, Layers } from 'lucide-react';
+import { Sparkles, Eye, HeartPulse, Layers } from 'lucide-react';
 import { useCurrency } from '../constants/currency';
 
 interface AnatomyMapProps {
@@ -13,13 +13,15 @@ interface AnatomyMapProps {
   onSelectForEarSet?: (piercing: PiercingType) => void;
 }
 
+type PainFilterType = 'all' | 'low' | 'medium' | 'high';
+
 export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectForEarSet }: AnatomyMapProps) {
   const { formatPrice } = useCurrency();
   const [selectedPiercing, setSelectedPiercing] = useState<PiercingType | null>(() => {
     return PIERCINGS.find(p => p.zone === activeZone) || null;
   });
   const [hoveredPiercing, setHoveredPiercing] = useState<PiercingType | null>(null);
-  const [painFilter, setPainFilter] = useState<'all' | 'low' | 'medium' | 'high'>('all');
+  const [painFilter, setPainFilter] = useState<PainFilterType>('all');
 
   const zonePiercings = PIERCINGS.filter((p) => p.zone === activeZone);
   
@@ -45,14 +47,14 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectFo
         </div>
         <div className="flex flex-wrap gap-2">
           {[
-            { id: 'all', label: 'Все проколы' },
-            { id: 'low', label: 'Минимум ощущений (1-2★)' },
-            { id: 'medium', label: 'Умеренно (3★)' },
-            { id: 'high', label: 'Для опытных (4★)' },
+            { id: 'all' as PainFilterType, label: 'Все проколы' },
+            { id: 'low' as PainFilterType, label: 'Минимум ощущений (1-2★)' },
+            { id: 'medium' as PainFilterType, label: 'Умеренно (3★)' },
+            { id: 'high' as PainFilterType, label: 'Для опытных (4★)' },
           ].map((f) => (
             <button
               key={f.id}
-              onClick={() => setPainFilter(f.id as any)}
+              onClick={() => setPainFilter(f.id)}
               className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
                 painFilter === f.id
                   ? 'bg-[#E0A98B] text-black font-bold shadow-[0_0_15px_rgba(224,169,139,0.3)]'

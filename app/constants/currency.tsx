@@ -1,11 +1,13 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+'use client';
+
+import React, { createContext, useContext, useState } from 'react';
 
 export type CurrencyCode = 'CZK' | 'EUR' | 'USD';
 
 export interface CurrencyConfig {
   code: CurrencyCode;
   symbol: string;
-  rateFromCzk: number; // 1 CZK = X currency
+  rateFromCzk: number;
   format: (amountInCzk: number) => string;
 }
 
@@ -25,7 +27,7 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
   EUR: {
     code: 'EUR',
     symbol: '€',
-    rateFromCzk: 0.040, // 1 EUR ≈ 25 CZK
+    rateFromCzk: 0.040,
     format: (amountInCzk: number) =>
       new Intl.NumberFormat('de-DE', {
         style: 'currency',
@@ -37,7 +39,7 @@ export const CURRENCIES: Record<CurrencyCode, CurrencyConfig> = {
   USD: {
     code: 'USD',
     symbol: '$',
-    rateFromCzk: 0.043, // 1 USD ≈ 23.2 CZK
+    rateFromCzk: 0.043,
     format: (amountInCzk: number) =>
       new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -63,14 +65,15 @@ const CurrencyContext = createContext<CurrencyContextType>({
 });
 
 export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currency, setCurrencyState] = useState<CurrencyCode>('CZK');
-
-  useEffect(() => {
-    const saved = localStorage.getItem('aura_currency') as CurrencyCode | null;
-    if (saved && CURRENCIES[saved]) {
-      setCurrencyState(saved);
+  const [currency, setCurrencyState] = useState<CurrencyCode>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('aura_currency') as CurrencyCode | null;
+      if (saved && CURRENCIES[saved]) {
+        return saved;
+      }
     }
-  }, []);
+    return 'CZK';
+  });
 
   const setCurrency = (newCurrency: CurrencyCode) => {
     setCurrencyState(newCurrency);
