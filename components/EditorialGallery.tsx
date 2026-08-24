@@ -75,8 +75,7 @@ export default function EditorialGallery({ onOpenBooking }: EditorialGalleryProp
             <motion.article
               key={frame.id}
               initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.55, delay: index * 0.08 }}
               className={`group relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#111116] shadow-2xl ${frame.className}`}
             >
