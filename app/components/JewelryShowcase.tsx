@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Gem, ArrowUpRight } from 'lucide-react';
+import { Sparkles, Gem, ArrowUpRight, Search, SlidersHorizontal } from 'lucide-react';
 import Image from 'next/image';
-import { formatCzk } from '../constants/currency';
+import { useCurrency } from '../constants/currency';
 
 interface JewelryItem {
   id: string;
@@ -28,7 +28,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 5900,
     badge: 'Bestseller',
     gem: 'Бриллианты огранки Маркиз',
-    colorHex: '#D4AF37'
+    colorHex: '#D4AF37',
   },
   {
     id: 'j2',
@@ -39,7 +39,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 1600,
     badge: 'New',
     gem: 'Синтетический белый опал кабошон',
-    colorHex: '#E2E8F0'
+    colorHex: '#E2E8F0',
   },
   {
     id: 'j3',
@@ -50,7 +50,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 7200,
     badge: 'Luxury',
     gem: 'Кристаллы Swarovski по кругу',
-    colorHex: '#E0A98B'
+    colorHex: '#E0A98B',
   },
   {
     id: 'j4',
@@ -60,7 +60,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     threading: 'Threadless (Push-Pin)',
     price: 1400,
     gem: 'Тройной фианит в крапанах',
-    colorHex: '#C0C0C0'
+    colorHex: '#C0C0C0',
   },
   {
     id: 'j5',
@@ -71,7 +71,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 9200,
     badge: 'Exclusive',
     gem: 'Гидротермальный изумруд',
-    colorHex: '#50C878'
+    colorHex: '#50C878',
   },
   {
     id: 'j6',
@@ -81,27 +81,34 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     threading: 'Threadless (Push-Pin)',
     price: 1850,
     gem: 'Голубой опал Aurora Borealis',
-    colorHex: '#8A2BE2'
-  }
+    colorHex: '#8A2BE2',
+  },
 ];
 
 const CATEGORIES = [
   { id: 'all', name: 'Все украшения' },
   { id: 'gold', name: 'Золото 14K/18K' },
-  { id: 'clusters', name: 'Кластеры' },
+  { id: 'clusters', name: 'Кластеры & Топы' },
   { id: 'clickers', name: 'Кликеры & Кольца' },
-  { id: 'opals', name: 'Опалы' },
+  { id: 'opals', name: 'Опалы Aurora' },
 ];
 
 export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: (item: JewelryItem) => void }) {
+  const { formatPrice } = useCurrency();
   const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filtered = activeCategory === 'all' 
-    ? JEWELRY_CATALOG 
-    : JEWELRY_CATALOG.filter(j => j.category === activeCategory);
+  const filtered = JEWELRY_CATALOG.filter((item) => {
+    const matchesCat = activeCategory === 'all' || item.category === activeCategory;
+    const matchesSearch = searchQuery.trim() === '' || 
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.gem.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.material.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCat && matchesSearch;
+  });
 
   return (
-    <section id="jewelry" className="py-24 px-6 bg-surface/30 border-t border-white/5 relative overflow-hidden">
+    <section id="jewelry" className="py-24 px-4 sm:px-6 bg-surface/30 border-t border-white/5 relative overflow-hidden">
       {/* Фоновый свет */}
       <div className="absolute top-1/2 right-0 w-[500px] h-[500px] bg-[#D4AF37]/5 blur-[160px] rounded-full pointer-events-none" />
 
@@ -119,36 +126,56 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
           </p>
         </div>
 
-        <div className="relative min-h-[220px] md:min-h-[280px] overflow-hidden rounded-[2rem] border border-white/10 mb-10">
+        {/* Editorial баннер */}
+        <div className="relative min-h-[220px] md:min-h-[280px] overflow-hidden rounded-[2.5rem] border border-white/10 mb-10 shadow-2xl">
           <Image
             src="/images/jewelry-editorial.webp"
             alt="Титановые и золотые украшения для пирсинга на металлическом подносе"
             fill
             sizes="(max-width: 768px) 100vw, 1280px"
-            className="object-cover object-center opacity-80"
+            className="object-cover object-center opacity-85"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/35 to-transparent" />
-          <div className="relative z-10 max-w-md p-7 md:p-10">
-            <p className="text-xs uppercase tracking-[0.24em] text-[#E0A98B] font-bold mb-3">Материалы, с которых начинается комфорт</p>
-            <p className="text-lg md:text-2xl font-heading font-bold leading-snug">Только титан ASTM F-136 и проверенное золото для первичного заживления.</p>
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+          <div className="relative z-10 max-w-lg p-6 sm:p-10 flex flex-col justify-center h-full">
+            <span className="text-xs uppercase tracking-[0.24em] text-[#E0A98B] font-bold mb-2">
+              Ювелирный стандарт ASTM F-136
+            </span>
+            <p className="text-xl sm:text-3xl font-heading font-bold leading-snug text-white">
+              Безупречная зеркальная полировка без микропор и токсичного никеля.
+            </p>
           </div>
         </div>
 
-        {/* Категории */}
-        <div className="flex justify-center flex-wrap gap-2 md:gap-3 mb-14">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`px-5 py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-300 ${
-                activeCategory === cat.id
-                  ? 'bg-[#E0A98B] text-black shadow-[0_0_20px_rgba(224,169,139,0.3)] font-bold'
-                  : 'glass text-gray-400 hover:text-white hover:border-white/20'
-              }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+        {/* Панель фильтрации и поиска */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10 max-w-6xl mx-auto">
+          {/* Категории */}
+          <div className="flex justify-center flex-wrap gap-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? 'bg-[#E0A98B] text-black shadow-[0_0_20px_rgba(224,169,139,0.3)] font-bold'
+                    : 'glass text-gray-400 hover:text-white hover:border-white/20'
+                }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Строка поиска */}
+          <div className="relative w-full md:w-72">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Поиск камня или металла..."
+              className="w-full pl-10 pr-4 py-2 rounded-full bg-black/50 border border-white/15 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#E0A98B]"
+            />
+          </div>
         </div>
 
         {/* Сетка товаров */}
@@ -162,24 +189,24 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="glass rounded-[2rem] p-6 border border-white/5 hover:border-[#E0A98B]/40 transition-all duration-300 group flex flex-col justify-between hover:shadow-[0_10px_30px_rgba(224,169,139,0.1)] relative"
+                className="glass rounded-[2.5rem] p-6 border border-white/5 hover:border-[#E0A98B]/40 transition-all duration-300 group flex flex-col justify-between hover:shadow-[0_10px_35px_rgba(224,169,139,0.15)] relative"
               >
                 {/* Бейдж */}
                 {item.badge && (
-                  <span className="absolute top-6 right-6 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E0A98B]/20 text-[#E0A98B] border border-[#E0A98B]/30">
+                  <span className="absolute top-6 right-6 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E0A98B]/20 text-[#E0A98B] border border-[#E0A98B]/30 font-mono">
                     {item.badge}
                   </span>
                 )}
 
                 {/* Графический макет украшения */}
-                <div className="relative w-full h-48 rounded-2xl bg-black/40 border border-white/5 flex items-center justify-center mb-6 overflow-hidden group-hover:border-[#E0A98B]/20 transition-colors">
-                  <div 
-                    className="w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-110 shadow-2xl relative"
-                    style={{ 
-                      background: `radial-gradient(circle, ${item.colorHex}33 0%, rgba(0,0,0,0) 70%)` 
+                <div className="relative w-full h-48 rounded-2xl bg-black/50 border border-white/5 flex items-center justify-center mb-6 overflow-hidden group-hover:border-[#E0A98B]/20 transition-colors">
+                  <div
+                    className="w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-115 shadow-2xl relative"
+                    style={{
+                      background: `radial-gradient(circle, ${item.colorHex}33 0%, rgba(0,0,0,0) 70%)`,
                     }}
                   >
-                    <div 
+                    <div
                       className="w-10 h-10 rounded-full border-2 border-white/40 flex items-center justify-center shadow-lg"
                       style={{ borderColor: item.colorHex }}
                     >
@@ -197,7 +224,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                     {item.name}
                   </h4>
                   <p className="text-xs text-gray-400 mb-1">{item.material}</p>
-                  <p className="text-xs text-[#D4AF37] mb-6 flex items-center gap-1">
+                  <p className="text-xs text-[#D4AF37] mb-6 flex items-center gap-1.5 font-medium">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#D4AF37]" />
                     {item.gem}
                   </p>
@@ -206,13 +233,13 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                 {/* Цена и CTA */}
                 <div className="flex items-center justify-between pt-4 border-t border-white/5">
                   <div>
-                    <span className="text-[10px] uppercase text-gray-500 block">Стоимость</span>
-                    <span className="text-xl font-bold text-white">{formatCzk(item.price)}</span>
+                    <span className="text-[10px] uppercase text-gray-500 block font-mono">Стоимость</span>
+                    <span className="text-xl font-bold text-white font-mono">{formatPrice(item.price)}</span>
                   </div>
                   <button
                     onClick={() => onSelectJewelry(item)}
-                    className="p-3 rounded-full bg-white/5 group-hover:bg-[#E0A98B] group-hover:text-black text-white transition-all duration-300"
-                    aria-label="Примерить украшение"
+                    className="p-3 rounded-full bg-white/5 group-hover:bg-[#E0A98B] group-hover:text-black text-white transition-all duration-300 shadow-md"
+                    aria-label="Примерить и забронировать"
                   >
                     <ArrowUpRight className="w-5 h-5" />
                   </button>
