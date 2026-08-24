@@ -91,8 +91,10 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
 
   const getTelegramMessageUrl = () => {
     const text = encodeURIComponent(getRawMessageText());
-    return `https://t.me/share/url?url=&text=${text}`;
+    return `https://t.me/yacure0?text=${text}`;
   };
+
+  const getTelegramDirectUrl = () => 'https://t.me/yacure0';
 
   const getWhatsAppMessageUrl = () => {
     const text = encodeURIComponent(getRawMessageText());

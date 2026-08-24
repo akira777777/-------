@@ -52,6 +52,17 @@ export const AFTERCARE_INFO = {
   content: "После пирсинга крайне важно соблюдать правила гигиены в первые 3 месяца. Мы даем подробную инструкцию и рекомендуем использовать специализированные средства для ухода (например, Brine Healer)."
 };
 
+export const SOCIAL_LINKS = {
+  telegram: {
+    handle: "@yacure0",
+    url: "https://t.me/yacure0",
+  },
+  instagram: {
+    handle: "@b00tleg._",
+    url: "https://www.instagram.com/b00tleg._?igsi=MTdrMDZjNmk4bzBwdg==",
+  },
+};
+
 export const FOOTER_TEXT = {
   copyright: "© 2026 AURA PIERCING STUDIO PRAHA. Все права защищены.",
   currencyNotice: "Цены отображаются в ${currency} · Финальная стоимость фиксируется до процедуры"
