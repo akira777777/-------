@@ -10,8 +10,9 @@ const syne = Syne({
 });
 
 const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin', 'cyrillic-ext'],
+  subsets: ['latin', 'latin-ext', 'cyrillic-ext'],
   variable: '--font-jakarta',
+  weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
 });
 
@@ -57,6 +58,24 @@ export const metadata: Metadata = {
     title: 'AURA Piercing Studio Praha',
     description: 'Анатомический пирсинг и ювелирный подбор сетапов в Праге.',
     images: ['/images/curated-ear-styling.webp'],
+  },
+  icons: {
+    icon: '/icon.svg',
+    apple: '/icon.svg',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://aura-piercing.cz',
   },
 };
 
