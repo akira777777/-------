@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ArrowUpRight, Gem, Images, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Camera, Gem, Sparkles } from 'lucide-react';
 
 interface EditorialGalleryProps {
   onOpenBooking: () => void;
@@ -50,7 +50,7 @@ export default function EditorialGallery({ onOpenBooking }: EditorialGalleryProp
         <div className="mb-10 grid items-end gap-6 lg:grid-cols-[1fr_auto]">
           <div>
             <span className="badge-luxury mb-4 font-mono">
-              <Images className="h-3.5 w-3.5" />
+              <Camera className="h-3.5 w-3.5" />
               AURA editorial · visual concepts
             </span>
             <h2 className="max-w-3xl font-heading text-3xl font-bold leading-tight text-white md:text-5xl">
