@@ -32,7 +32,9 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState(TIME_SLOTS[2]);
   const [comment, setComment] = useState('');
-  const [minDate, setMinDate] = useState('');
+  const [minDate] = useState(() =>
+    new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' }).format(new Date())
+  );
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const titleId = useId();
   const nameId = useId();
@@ -42,19 +44,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   const commentId = useId();
 
   useEffect(() => {
-    setMinDate(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' }).format(new Date()));
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) {
-      setStep('form');
-      setClientName('');
-      setClientPhone('');
-      setSelectedDate('');
-      setSelectedTime(TIME_SLOTS[2]);
-      setComment('');
-      return;
-    }
+    if (!isOpen) return;
 
     const previouslyFocused = document.activeElement as HTMLElement | null;
     const previousOverflow = document.body.style.overflow;
@@ -237,7 +227,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
                         type="date"
                         id={dateId}
                         name="date"
-                        min={minDate || undefined}
+                        min={minDate}
                         value={selectedDate}
                         onChange={(e) => setSelectedDate(e.target.value)}
                         className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-black/40 border border-white/10 text-white focus:outline-none focus:border-[#E0A98B] text-sm"
