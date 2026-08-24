@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, CheckCircle2, Sparkles } from 'lucide-react';
+import { Award, CheckCircle2, Sparkles, Instagram } from 'lucide-react';
+import { SOCIAL_LINKS } from '@/constants/content_files/content';
 
 interface MastersSectionProps {
   onBookWithMaster: () => void;
@@ -165,13 +166,25 @@ export default function MastersSection({ onBookWithMaster }: MastersSectionProps
                   ))}
                 </div>
 
-                <button
-                  onClick={onBookWithMaster}
-                  className="btn-premium bg-[#E0A98B] text-black hover:bg-white font-bold w-full sm:w-fit py-3.5 px-8 shadow-[0_0_25px_rgba(224,169,139,0.35)] flex items-center justify-center gap-2"
-                >
-                  <Sparkles className="w-4 h-4" />
-                  Записаться на сеанс к Anastasya
-                </button>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                  <button
+                    onClick={onBookWithMaster}
+                    className="btn-premium bg-[#E0A98B] text-black hover:bg-white font-bold w-full sm:w-fit py-3.5 px-8 shadow-[0_0_25px_rgba(224,169,139,0.35)] flex items-center justify-center gap-2"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Записаться на сеанс к Anastasya
+                  </button>
+                  <a
+                    href={SOCIAL_LINKS.instagram.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-premium border-white/20 text-white hover:border-[#E0A98B] hover:text-[#E0A98B] py-3.5 px-6 flex items-center justify-center gap-2 text-xs"
+                    title="Instagram @b00tleg._"
+                  >
+                    <Instagram className="w-4 h-4 text-[#E0A98B]" />
+                    <span>Instagram: {SOCIAL_LINKS.instagram.handle}</span>
+                  </a>
+                </div>
               </div>
             </motion.div>
           ) : (
