@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PIERCINGS, type PiercingType } from '../constants/piercings';
-import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle, CalendarPlus, Activity } from 'lucide-react';
 
 interface HealingCalculatorProps {
   onBookDownsize?: () => void;
@@ -17,6 +17,7 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
 
   // Расчет дат
   const baseDate = new Date(procedureDate || new Date());
+  const now = new Date();
   
   // Дата даунсайза (+4 недели или 0 если не требуется)
   const downsizeDays = (selectedPiercing.downsizeWeeks || 4) * 7;
@@ -26,7 +27,13 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
   const topSwapDate = new Date(baseDate.getTime() + 90 * 24 * 60 * 60 * 1000);
   
   // Дата полного заживления (+6-9 месяцев)
-  const fullHealedDate = new Date(baseDate.getTime() + 210 * 24 * 60 * 60 * 1000);
+  const fullHealingDays = 210;
+  const fullHealedDate = new Date(baseDate.getTime() + fullHealingDays * 24 * 60 * 60 * 1000);
+
+  // Расчет прогресса если дата в прошлом
+  const daysPassed = Math.max(0, Math.floor((now.getTime() - baseDate.getTime()) / (1000 * 60 * 60 * 24)));
+  const progressPercent = Math.min(100, Math.round((daysPassed / fullHealingDays) * 100));
+  const daysUntilDownsize = Math.ceil((downsizeDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
   const formatDate = (d: Date) => {
     return new Intl.DateTimeFormat('ru-RU', {
@@ -34,6 +41,23 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
       month: 'long',
       year: 'numeric'
     }).format(d);
+  };
+
+  const setRelativeDays = (offsetDays: number) => {
+    const d = new Date();
+    d.setDate(d.getDate() - offsetDays);
+    setProcedureDate(new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' }).format(d));
+  };
+
+  // Google Calendar URL для Даунсайза
+  const getGoogleCalendarUrl = () => {
+    const title = encodeURIComponent(`AURA Studio: Плановый даунсайз (${selectedPiercing.name})`);
+    const details = encodeURIComponent(
+      `Бесплатный плановый даунсайз и осмотр прокола ${selectedPiercing.name} в AURA Piercing Studio Praha.\nМастер: Anastasya\nСтудия: Прага.`
+    );
+    const dateStr = downsizeDate.toISOString().replace(/-|:|\.\d+/g, '').slice(0, 8);
+    const dates = `${dateStr}T110000Z/${dateStr}T120000Z`;
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${dates}&location=Prague`;
   };
 
   return (
@@ -56,7 +80,7 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
         </div>
 
         {/* Панель управления */}
-        <div className="glass-card p-6 sm:p-8 rounded-[2.5rem] border border-white/10 shadow-2xl mb-10 max-w-4xl mx-auto">
+        <div className="glass-card p-6 sm:p-8 rounded-[2.5rem] border border-white/10 shadow-2xl mb-10 max-w-4xl mx-auto space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-bold font-mono">
@@ -82,16 +106,69 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
               <label className="block text-xs uppercase tracking-wider text-gray-400 mb-2 font-bold font-mono">
                 2. Дата процедуры:
               </label>
-              <div className="relative">
-                <input
-                  type="date"
-                  value={procedureDate}
-                  onChange={(e) => setProcedureDate(e.target.value)}
-                  className="w-full px-4 py-3 rounded-2xl bg-black/60 border border-white/15 text-white font-medium focus:outline-none focus:border-[#E0A98B] text-sm"
-                />
+              <input
+                type="date"
+                value={procedureDate}
+                onChange={(e) => setProcedureDate(e.target.value)}
+                className="w-full px-4 py-3 rounded-2xl bg-black/60 border border-white/15 text-white font-medium focus:outline-none focus:border-[#E0A98B] text-sm mb-2"
+              />
+              {/* Быстрые пресеты дат */}
+              <div className="flex flex-wrap gap-1.5">
+                <button
+                  onClick={() => setRelativeDays(0)}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white border border-white/5 transition-all"
+                >
+                  Сегодня
+                </button>
+                <button
+                  onClick={() => setRelativeDays(7)}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white border border-white/5 transition-all"
+                >
+                  1 нед. назад
+                </button>
+                <button
+                  onClick={() => setRelativeDays(14)}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white border border-white/5 transition-all"
+                >
+                  2 нед. назад
+                </button>
+                <button
+                  onClick={() => setRelativeDays(28)}
+                  className="px-2.5 py-1 rounded-lg text-[10px] font-mono bg-white/5 hover:bg-white/15 text-gray-300 hover:text-white border border-white/5 transition-all"
+                >
+                  4 нед. (Даунсайз)
+                </button>
               </div>
             </div>
           </div>
+
+          {/* Индикатор текущего прогресса если дата в прошлом */}
+          {daysPassed > 0 && (
+            <div className="pt-4 border-t border-white/10">
+              <div className="flex justify-between items-center text-xs mb-2">
+                <span className="flex items-center gap-1.5 text-gray-300 font-mono">
+                  <Activity className="w-3.5 h-3.5 text-[#00F2FE]" />
+                  Прогресс регенерации: <strong>{daysPassed} дн. с момента прокола</strong>
+                </span>
+                <span className="text-gold-rose font-bold font-mono">{progressPercent}%</span>
+              </div>
+              <div className="w-full h-2 rounded-full bg-white/5 overflow-hidden border border-white/10">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercent}%` }}
+                  transition={{ duration: 0.8 }}
+                  className="h-full rounded-full bg-gradient-to-r from-[#E0A98B] via-[#D4AF37] to-[#00F2FE]"
+                />
+              </div>
+              {selectedPiercing.downsizeRecommended && (
+                <p className="text-[11px] text-gray-400 mt-2 font-mono">
+                  {daysUntilDownsize > 0 
+                    ? `⏳ До планового даунсайза осталось ~${daysUntilDownsize} дн.`
+                    : '⚡ Время для даунсайза наступило! Запишитесь на бесплатную замену.'}
+                </p>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Таймлайн карточек */}
@@ -208,14 +285,28 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
               Помните: даунсайз в студии AURA проводится <strong className="text-white">бесплатно</strong> в рамках пожизненного сопровождения каждого прокола.
             </p>
           </div>
-          {onBookDownsize && (
-            <button
-              onClick={onBookDownsize}
-              className="btn-premium bg-[#E0A98B] text-black font-bold text-xs py-2 px-5 shrink-0 hover:bg-white"
-            >
-              Записаться на осмотр
-            </button>
-          )}
+          <div className="flex items-center gap-2 shrink-0">
+            {selectedPiercing.downsizeRecommended && (
+              <a
+                href={getGoogleCalendarUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-premium border-white/20 text-gray-200 hover:border-[#00F2FE] hover:text-[#00F2FE] text-xs py-2 px-4 flex items-center gap-1.5"
+                title="Добавить дату даунсайза в Google Календарь"
+              >
+                <CalendarPlus className="w-3.5 h-3.5" />
+                В календарь
+              </a>
+            )}
+            {onBookDownsize && (
+              <button
+                onClick={onBookDownsize}
+                className="btn-premium bg-[#E0A98B] text-black font-bold text-xs py-2 px-5 hover:bg-white"
+              >
+                Записаться на осмотр
+              </button>
+            )}
+          </div>
         </div>
 
       </div>

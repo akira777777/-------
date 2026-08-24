@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES, SILHOUETTES, ANODIZATION_PRESETS, type Material, type Stone, type SilhouetteConfig } from '../constants/jewelry_types';
 import { useCurrency } from '../constants/currency';
 import type { PiercingType } from '../constants/piercings';
-import { Sparkles, ChevronRight, Droplets, RotateCw } from 'lucide-react';
+import { Sparkles, ChevronRight, Droplets, RotateCw, Wand2 } from 'lucide-react';
 
 interface ConfiguratorProps {
   basePiercing: PiercingType;
@@ -33,6 +33,40 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
   const [selectedAnodization, setSelectedAnodization] = useState(ANODIZATION_PRESETS[0]);
   const [withCareKit, setWithCareKit] = useState(true);
   const [rotationAngle, setRotationAngle] = useState(0);
+
+  // Синхронизация совместимости силуэта при смене типа пирсинга
+  useEffect(() => {
+    if (!selectedSilhouette.compatibleWith.includes(basePiercing.jewelryType)) {
+      const compatible = SILHOUETTES.find(s => s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
+      setSelectedSilhouette(compatible);
+    }
+  }, [basePiercing.jewelryType, selectedSilhouette]);
+
+  // Быстрые пресеты стиля
+  const applyPreset = (presetName: 'classic_titanium' | 'rose_opal' | 'royal_gold' | 'ice_blue') => {
+    if (presetName === 'classic_titanium') {
+      setSelectedMaterial(MATERIALS[0]);
+      setSelectedAnodization(ANODIZATION_PRESETS[0]);
+      setSelectedStone(STONES[1]);
+      const sil = SILHOUETTES.find(s => s.id === 'labret_stud' && s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
+      setSelectedSilhouette(sil);
+    } else if (presetName === 'rose_opal') {
+      setSelectedMaterial(MATERIALS[1]); // Rose Gold
+      setSelectedStone(STONES[3]); // Opal
+      const sil = SILHOUETTES.find(s => (s.id === 'cluster_trio' || s.id === 'marquise_fan') && s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
+      setSelectedSilhouette(sil);
+    } else if (presetName === 'royal_gold') {
+      setSelectedMaterial(MATERIALS[2]); // Yellow Gold 18K
+      setSelectedStone(STONES[1]); // Diamond
+      const sil = SILHOUETTES.find(s => (s.id === 'marquise_fan' || s.id === 'eternity_hoop') && s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
+      setSelectedSilhouette(sil);
+    } else if (presetName === 'ice_blue') {
+      setSelectedMaterial(MATERIALS[0]); // Titanium
+      const iceAnod = ANODIZATION_PRESETS.find(a => a.id === 'ice_blue') || ANODIZATION_PRESETS[0];
+      setSelectedAnodization(iceAnod);
+      setSelectedStone(STONES[1]);
+    }
+  };
 
   // Расчет стоимости
   const careKitPrice = withCareKit ? CARE_KIT_PRICE_CZK : 0;
@@ -314,6 +348,40 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
               <span className="text-[10px] uppercase tracking-widest text-[#E0A98B] font-bold font-mono">Шаг 1 из 4</span>
               <h4 className="text-xl sm:text-2xl font-heading font-bold text-white mt-1">Выберите благородный сплав</h4>
               <p className="text-xs text-gray-400 mt-1">Все металлы имеют гипоаллергенный сертификат и пригодны для первичного заживления</p>
+            </div>
+
+            {/* Быстрые пресеты стиля */}
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/10">
+              <div className="flex items-center gap-1.5 mb-2.5 text-[11px] uppercase tracking-wider text-gray-400 font-mono font-bold">
+                <Wand2 className="w-3.5 h-3.5 text-[#E0A98B]" />
+                Готовые ювелирные сеты в 1 клик:
+              </div>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button
+                  onClick={() => applyPreset('classic_titanium')}
+                  className="px-3 py-2 rounded-xl text-xs bg-white/5 hover:bg-white/15 border border-white/10 hover:border-[#E0A98B] text-gray-200 hover:text-white transition-all text-left font-mono"
+                >
+                  ✨ Титан F-136
+                </button>
+                <button
+                  onClick={() => applyPreset('rose_opal')}
+                  className="px-3 py-2 rounded-xl text-xs bg-[#E0A98B]/10 hover:bg-[#E0A98B]/20 border border-[#E0A98B]/30 text-[#E0A98B] transition-all text-left font-mono font-bold"
+                >
+                  🌸 Rose Gold + Опал
+                </button>
+                <button
+                  onClick={() => applyPreset('royal_gold')}
+                  className="px-3 py-2 rounded-xl text-xs bg-[#D4AF37]/10 hover:bg-[#D4AF37]/20 border border-[#D4AF37]/30 text-[#D4AF37] transition-all text-left font-mono font-bold"
+                >
+                  👑 Золото 18K + Бриллиант
+                </button>
+                <button
+                  onClick={() => applyPreset('ice_blue')}
+                  className="px-3 py-2 rounded-xl text-xs bg-[#00F2FE]/10 hover:bg-[#00F2FE]/20 border border-[#00F2FE]/30 text-[#00F2FE] transition-all text-left font-mono"
+                >
+                  ❄️ Ice Blue Titanium
+                </button>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

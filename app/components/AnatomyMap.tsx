@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
@@ -23,6 +23,14 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectFo
   const [hoveredPiercing, setHoveredPiercing] = useState<PiercingType | null>(null);
   const [painFilter, setPainFilter] = useState<PainFilterType>('all');
 
+  // Автоматическая синхронизация при смене активной зоны
+  useEffect(() => {
+    if (!selectedPiercing || selectedPiercing.zone !== activeZone) {
+      const defaultForZone = PIERCINGS.find((p) => p.zone === activeZone) || null;
+      setSelectedPiercing(defaultForZone);
+    }
+  }, [activeZone, selectedPiercing]);
+
   const zonePiercings = PIERCINGS.filter((p) => p.zone === activeZone);
   
   const filteredPiercings = zonePiercings.filter((p) => {
@@ -35,7 +43,12 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectFo
   const zoneData = ZONE_PATHS[activeZone] || ZONE_PATHS.ear;
 
   return (
-    <div className="relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center glass-card rounded-[2.5rem] p-5 sm:p-8 md:p-10 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+    <div 
+      id={`zone-panel-${activeZone}`}
+      role="tabpanel"
+      aria-labelledby={`zone-tab-${activeZone}`}
+      className="relative w-full max-w-6xl mx-auto flex flex-col items-center justify-center glass-card rounded-[2.5rem] p-5 sm:p-8 md:p-10 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+    >
       
       {/* Фильтр по болезненности / уровню комфорта */}
       <div className="w-full flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 pb-6 border-b border-white/5">
@@ -156,15 +169,15 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectFo
                     isSelected ? 'bg-[#D4AF37]/50 animate-ping' : 'bg-[#E0A98B]/30 animate-pulse'
                   }`} />
 
-                  {/* Кнопка хотспота */}
+                  {/* Кнопка хотспота с расширенной тач-зоной для мобильных (min 44x44) */}
                   <motion.button
-                    whileHover={{ scale: 1.4 }}
+                    whileHover={{ scale: 1.3 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={() => setSelectedPiercing(piercing)}
                     onMouseEnter={() => setHoveredPiercing(piercing)}
                     onMouseLeave={() => setHoveredPiercing(null)}
-                    aria-label={piercing.name}
-                    className={`relative w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 transition-all duration-300 flex items-center justify-center cursor-pointer ${
+                    aria-label={`Выбрать прокол ${piercing.name}`}
+                    className={`relative w-4 h-4 sm:w-5 sm:h-5 rounded-full border-2 transition-all duration-300 flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0A98B] before:absolute before:-inset-3 before:content-[''] ${
                       isSelected
                         ? 'bg-white border-[#D4AF37] shadow-[0_0_25px_#D4AF37] scale-125'
                         : 'bg-[#E0A98B] border-[#08080B] shadow-[0_0_15px_#E0A98B]'
@@ -191,6 +204,26 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectFo
               );
             })}
           </motion.div>
+
+          {/* Быстрые чипсы точек для мгновенного выбора (особенно на тачскринах) */}
+          <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+            {filteredPiercings.map((p) => {
+              const isSelected = selectedPiercing?.id === p.id;
+              return (
+                <button
+                  key={p.id}
+                  onClick={() => setSelectedPiercing(p)}
+                  className={`px-2.5 py-1 rounded-full text-[10px] font-mono whitespace-nowrap transition-all shrink-0 border ${
+                    isSelected
+                      ? 'bg-[#E0A98B] text-black border-[#E0A98B] font-bold shadow-[0_0_10px_rgba(224,169,139,0.4)]'
+                      : 'bg-black/70 text-gray-300 border-white/10 hover:border-white/30'
+                  }`}
+                >
+                  {p.name.split(' (')[0]}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Правая карточка детальной информации */}
