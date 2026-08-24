@@ -1,16 +1,17 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
-import { Syne, Plus_Jakarta_Sans } from 'next/font/google';
+import { Montserrat, Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 
-const syne = Syne({
-  subsets: ['latin'],
+const montserrat = Montserrat({
+  subsets: ['latin', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-syne',
+  weight: ['400', '500', '600', '700', '800', '900'],
   display: 'swap',
 });
 
 const jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin', 'latin-ext', 'cyrillic-ext'],
+  subsets: ['latin', 'latin-ext', 'cyrillic', 'cyrillic-ext'],
   variable: '--font-jakarta',
   weight: ['300', '400', '500', '600', '700', '800'],
   display: 'swap',
@@ -113,7 +114,7 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="ru" className={`${syne.variable} ${jakarta.variable} scroll-smooth`}>
+    <html lang="ru" className={`${montserrat.variable} ${jakarta.variable} scroll-smooth`}>
       <head>
         <script
           type="application/ld+json"

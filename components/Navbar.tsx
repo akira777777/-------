@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, X, Sparkles, Globe, ChevronDown } from 'lucide-react';
-import { useCurrency, CURRENCIES, type CurrencyCode } from '../constants/currency';
+import { useCurrency, CURRENCIES, type CurrencyCode } from '@/constants/currency';
 
 interface NavbarProps {
   onOpenBooking: () => void;
@@ -53,40 +53,40 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const currencyOptions: CurrencyCode[] = ['CZK', 'EUR', 'USD'];
 
   return (
-    <nav className={`fixed top-0 w-full z-40 px-3 sm:px-6 py-3 sm:py-4 transition-all duration-300 ${scrolled ? 'bg-black/30' : ''}`}>
-      <div className={`max-w-7xl mx-auto glass rounded-2xl px-4 sm:px-6 py-3 flex justify-between items-center border backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] transition-all duration-300 ${scrolled ? 'border-white/15 shadow-[0_10px_40px_rgba(0,0,0,0.7)]' : 'border-white/10'}`}>
+    <nav className={`fixed top-0 w-full z-40 px-2.5 sm:px-6 py-2.5 sm:py-4 transition-all duration-300 ${scrolled ? 'bg-black/40 backdrop-blur-md' : ''}`}>
+      <div className={`max-w-7xl mx-auto glass rounded-2xl px-3 sm:px-6 py-2.5 sm:py-3 flex justify-between items-center border backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] transition-all duration-300 ${scrolled ? 'border-white/15 shadow-[0_10px_40px_rgba(0,0,0,0.7)]' : 'border-white/10'}`}>
         {/* Логотип */}
-        <Link href="/" className="text-lg sm:text-2xl font-heading font-bold tracking-tight text-gold-rose flex items-center gap-2 group">
+        <Link href="/" className="text-base sm:text-2xl font-heading font-bold tracking-tight text-gold-rose flex items-center gap-1.5 sm:gap-2 group shrink-0">
           <span className="bg-gradient-to-r from-white via-[#E0A98B] to-[#D4AF37] bg-clip-text text-transparent group-hover:brightness-110 transition-all">
             AURA
           </span>
-          <span className="text-white font-light text-xs sm:text-sm tracking-widest uppercase border-l border-white/20 pl-2">
+          <span className="text-white font-light text-[10px] sm:text-xs tracking-widest uppercase border-l border-white/20 pl-1.5 sm:pl-2">
             STUDIO
           </span>
         </Link>
 
         {/* Desktop Навигация */}
-        <div className="hidden lg:flex space-x-6 items-center text-xs font-medium uppercase tracking-wider">
-          <button onClick={() => scrollTo('map')} className="text-gray-300 hover:text-gold-rose transition-colors">
+        <div className="hidden lg:flex space-x-3.5 xl:space-x-5 items-center text-[11px] xl:text-xs font-medium uppercase tracking-wider">
+          <button onClick={() => scrollTo('map')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Карта проколов
           </button>
-          <button onClick={() => scrollTo('ear-curation')} className="text-gray-300 hover:text-gold-rose transition-colors flex items-center gap-1">
+          <button onClick={() => scrollTo('ear-curation')} className="text-gray-300 hover:text-gold-rose transition-colors flex items-center gap-1 whitespace-nowrap">
             <span className="w-1.5 h-1.5 rounded-full bg-[#E0A98B]" />
             Сет-билдер
           </button>
-          <button onClick={() => scrollTo('jewelry')} className="text-gray-300 hover:text-gold-rose transition-colors">
+          <button onClick={() => scrollTo('jewelry')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Витрина
           </button>
-          <button onClick={() => scrollTo('healing')} className="text-gray-300 hover:text-gold-rose transition-colors">
-            Календарь заживления
+          <button onClick={() => scrollTo('healing')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
+            Заживление
           </button>
-          <button onClick={() => scrollTo('masters')} className="text-gray-300 hover:text-gold-rose transition-colors">
+          <button onClick={() => scrollTo('masters')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Anastasya
           </button>
-          <button onClick={() => scrollTo('safety')} className="text-gray-300 hover:text-gold-rose transition-colors">
+          <button onClick={() => scrollTo('safety')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Безопасность
           </button>
-          <button onClick={() => scrollTo('testimonials')} className="text-gray-300 hover:text-gold-rose transition-colors">
+          <button onClick={() => scrollTo('testimonials')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Отзывы
           </button>
         </div>
