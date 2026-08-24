@@ -78,7 +78,7 @@ function HomeContent() {
             >
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/25 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-6 shadow-[0_0_25px_rgba(224,169,139,0.15)] font-mono">
                 <Sparkles className="w-3.5 h-3.5" />
-                AURA Studio Praha · Ear Curation &amp; Fine Jewelry
+                AURA Studio Praha · Ear Curation & Fine Jewelry
               </div>
 
               <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-bold mb-6 tracking-tight leading-[1.08]">
@@ -167,7 +167,7 @@ function HomeContent() {
                     Ear Curation Project
                   </p>
                   <p className="text-base font-heading font-bold text-white mt-1">
-                    Marquise 14K Gold &amp; Opal Cluster
+                    Marquise 14K Gold & Opal Cluster
                   </p>
                 </div>
                 <div className="text-right">
@@ -355,7 +355,7 @@ function HomeContent() {
           </div>
 
           <div>
-            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-mono">Контакты &amp; Локация</h4>
+            <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 font-mono">Контакты & Локация</h4>
             <ul className="space-y-3 text-xs text-gray-300">
               <li className="flex items-center gap-2.5">
                 <MapPin className="w-4 h-4 text-[#E0A98B] shrink-0" />

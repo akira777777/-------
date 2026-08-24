@@ -73,7 +73,7 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
             Индивидуальный трекинг
           </span>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
-            Калькулятор заживления &amp; График даунсайза
+            Калькулятор заживления & График даунсайза
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Выберите вид прокола и предполагаемую дату, чтобы узнать персональный таймлайн восстановления и дату обязательной замены лабрета.

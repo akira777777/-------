@@ -36,7 +36,7 @@ export default function AftercareDownsize() {
             Забота и Сопровождение
           </span>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
-            Гайд по заживлению &amp; Набор ухода
+            Гайд по заживлению & Набор ухода
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Мы сопровождаем каждого клиента до полного формирования здорового канала. Правильный уход гарантирует идеальный эстетический результат.

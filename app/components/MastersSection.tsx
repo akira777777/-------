@@ -60,7 +60,7 @@ export default function MastersSection({ onBookWithMaster }: MastersSectionProps
             Один мастер · Персональное кураторство
           </span>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
-            Anastasya &amp; авторские работы
+            Anastasya & авторские работы
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             От первой очной консультации и примерки до финального даунсайза — с вами работает один эксперт с медицинским бэкграундом.
@@ -124,7 +124,7 @@ export default function MastersSection({ onBookWithMaster }: MastersSectionProps
               <div className="p-8 md:p-12 flex flex-col justify-center">
                 <div className="flex items-center gap-2 mb-2">
                   <span className="text-xs uppercase tracking-[0.2em] text-[#D4AF37] font-bold">
-                    Top Piercer &amp; Jewelry Curator
+                    Top Piercer & Jewelry Curator
                   </span>
                 </div>
                 <h3 className="text-4xl md:text-6xl font-heading font-bold text-white mb-4">
