@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ShieldCheck, Award, Activity, Info } from 'lucide-react';
 
 export default function SafetySection() {
@@ -61,7 +62,7 @@ export default function SafetySection() {
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </section>
   );
 }
