@@ -12,12 +12,14 @@ body {
   color: rgb(var(--foreground-rgb));
   background-color: #08080B;
   background-image: 
-    radial-gradient(at 0% 0%, rgba(224, 169, 139, 0.06) 0px, transparent 50%),
+    radial-gradient(at 0% 0%, rgba(224, 169, 139, 0.07) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(212, 175, 55, 0.05) 0px, transparent 50%),
-    radial-gradient(at 50% 100%, rgba(0, 242, 254, 0.03) 0px, transparent 50%);
+    radial-gradient(at 50% 100%, rgba(0, 242, 254, 0.035) 0px, transparent 50%);
   background-attachment: fixed;
   min-height: 100vh;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 button:focus-visible,
@@ -135,4 +137,24 @@ select:focus-visible {
   .badge-luxury {
     @apply inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-widest bg-gradient-to-r from-[#E0A98B]/15 to-[#D4AF37]/15 border border-[#E0A98B]/30 text-[#E0A98B];
   }
+/* ─── Scroll Margin: compensate for fixed navbar ─── */
+section[id],
+div[id] {
+  scroll-margin-top: 80px;
 }
+
+/* ─── Subtle link animation ─── */
+a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* ─── Better image rendering ─── */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ─── Prevent content shift on scrollbar appear ─── */
+html {
+  overflow-y: scroll;
+}
+
