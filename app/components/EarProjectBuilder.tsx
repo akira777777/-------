@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type PiercingType } from '../constants/piercings';
 import { useCurrency } from '../constants/currency';
-import { Sparkles, Layers, Plus, Trash2, ShieldCheck, CheckCircle2, Droplets } from 'lucide-react';
+import { Sparkles, Layers, Trash2, CheckCircle2, Droplets } from 'lucide-react';
 import type { BookingData } from './BookingModal';
 
 interface EarProjectBuilderProps {

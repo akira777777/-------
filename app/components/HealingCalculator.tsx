@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PIERCINGS, type PiercingType } from '../constants/piercings';
-import { Calendar, Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
+import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle } from 'lucide-react';
 
 interface HealingCalculatorProps {
   onBookDownsize?: () => void;
