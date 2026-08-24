@@ -11,12 +11,12 @@ import EarProjectBuilder from '@/components/EarProjectBuilder';
 import JewelryShowcase from '@/components/JewelryShowcase';
 import HealingCalculator from '@/components/HealingCalculator';
 import MastersSection from '@/components/MastersSection';
-import { SITE_INFO, FAQ_ITEMS, SAFETY_STEPS, AFTERCARE_INFO } from './constants/content_files/content';
-import { ZONES, type ZoneId, type PiercingType } from './constants/piercings';
-import { CurrencyProvider, useCurrency } from './constants/currency';
+import { SITE_INFO, FAQ_ITEMS, SAFETY_STEPS, AFTERCARE_INFO } from '@/constants/content_files/content';
+import { ZONES, type ZoneId, type PiercingType } from '@/constants/piercings';
+import { CurrencyProvider, useCurrency } from '@/constants/currency';
 import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock, Layers } from 'lucide-react';
 
-const JewelryConfigurator = dynamic(() => import('./components/JewelryConfigurator'), {
+const JewelryConfigurator = dynamic(() => import('@/components/JewelryConfigurator'), {
   loading: () => (
     <div className="glass rounded-[2.5rem] border border-white/10 p-10 text-center text-sm text-gray-400 font-mono" role="status">
       ✨ Загружаем ювелирный конфигуратор…
