@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { Menu, X, Sparkles, Globe, ChevronDown } from 'lucide-react';
 import { useCurrency, CURRENCIES, type CurrencyCode } from '../constants/currency';
@@ -13,6 +13,27 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const { currency, setCurrency } = useCurrency();
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setCurrencyDropdownOpen(false);
+      }
+    };
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setCurrencyDropdownOpen(false);
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEsc);
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEsc);
+    };
+  }, []);
 
   const scrollTo = (id: string) => {
     setMobileMenuOpen(false);
@@ -66,7 +87,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
         {/* Правый блок: Переключатель валют + Кнопка записи */}
         <div className="flex items-center gap-2.5 sm:gap-4">
           {/* Переключатель валют (Desktop & Mobile) */}
-          <div className="relative">
+          <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl glass border border-white/10 text-xs font-mono font-bold text-gray-200 hover:text-white hover:border-[#E0A98B]/40 transition-all"

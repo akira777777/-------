@@ -33,6 +33,26 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
     }
   };
 
+  const applyEarPreset = (presetType: 'duo' | 'triple' | 'haute' | 'cascade') => {
+    if (presetType === 'duo') {
+      // First Lobe + Helix
+      setSelectedPiercings([earPiercings[0], earPiercings[2]]);
+    } else if (presetType === 'triple') {
+      // First Lobe + Upper Lobe + Helix
+      setSelectedPiercings([earPiercings[0], earPiercings[1], earPiercings[2]]);
+    } else if (presetType === 'haute') {
+      // Helix + Conch + Daith (e3, e5, e7)
+      const p1 = earPiercings.find(p => p.id === 'e3') || earPiercings[2];
+      const p2 = earPiercings.find(p => p.id === 'e5') || earPiercings[4];
+      const p3 = earPiercings.find(p => p.id === 'e7') || earPiercings[6];
+      setSelectedPiercings([p1, p2, p3]);
+    } else if (presetType === 'cascade') {
+      // First Lobe + Upper Lobe + Helix + Forward Helix + Conch
+      const subset = earPiercings.slice(0, 5);
+      setSelectedPiercings(subset);
+    }
+  };
+
   // Расчет стоимости и скидок
   const subtotal = selectedPiercings.reduce((sum, p) => sum + p.basePrice, 0);
   let discountPercent = 0;
@@ -51,7 +71,7 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
         englishName: 'Custom Ear Curation Set',
         anatomicalLocation: 'Анатомический проект уха',
         description: `Комплексный проект из ${selectedPiercings.length} проколов со скидкой ${discountPercent}%`,
-        painLevel: Math.max(...selectedPiercings.map((p) => p.painLevel)),
+        painLevel: selectedPiercings.length > 0 ? Math.max(...selectedPiercings.map((p) => p.painLevel)) : 1,
         initialHealingWeeks: '3-4 недели',
         fullHealingMonths: '6-9 месяцев',
         downsizeRecommended: true,
@@ -85,6 +105,37 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
             Комбинируйте несколько точек в один визит: Анастасия построит единую анатомическую композицию, а вы получите пакетную скидку до 15% и бесплатный набор ухода.
           </p>
+        </div>
+
+        {/* Быстрые шаблоны Ear Curation */}
+        <div className="flex flex-wrap justify-center items-center gap-2.5 mb-8">
+          <span className="text-xs text-gray-400 font-mono font-bold mr-1">
+            Популярные сетапы:
+          </span>
+          <button
+            onClick={() => applyEarPreset('duo')}
+            className="px-3.5 py-1.5 rounded-full text-xs bg-white/5 hover:bg-white/15 border border-white/10 hover:border-[#E0A98B] text-gray-200 hover:text-white transition-all font-mono"
+          >
+            ✨ Классический Дуэт (-10%)
+          </button>
+          <button
+            onClick={() => applyEarPreset('triple')}
+            className="px-3.5 py-1.5 rounded-full text-xs bg-[#E0A98B]/10 hover:bg-[#E0A98B]/25 border border-[#E0A98B]/30 text-[#E0A98B] transition-all font-mono font-bold"
+          >
+            🌸 Каскадное Трио (-15%)
+          </button>
+          <button
+            onClick={() => applyEarPreset('haute')}
+            className="px-3.5 py-1.5 rounded-full text-xs bg-[#D4AF37]/10 hover:bg-[#D4AF37]/25 border border-[#D4AF37]/30 text-[#D4AF37] transition-all font-mono font-bold"
+          >
+            👑 Haute Conch & Daith (-15%)
+          </button>
+          <button
+            onClick={() => applyEarPreset('cascade')}
+            className="px-3.5 py-1.5 rounded-full text-xs bg-[#00F2FE]/10 hover:bg-[#00F2FE]/25 border border-[#00F2FE]/30 text-[#00F2FE] transition-all font-mono font-bold"
+          >
+            💎 Полный Сетап 5 точек (-15% + Бокс)
+          </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

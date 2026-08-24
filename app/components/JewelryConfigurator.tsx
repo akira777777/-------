@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MATERIALS, STONES, SILHOUETTES, ANODIZATION_PRESETS, type Material, type Stone, type SilhouetteConfig } from '../constants/jewelry_types';
 import { useCurrency } from '../constants/currency';
@@ -27,20 +27,19 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
   const [step, setStep] = useState(1);
   const [selectedMaterial, setSelectedMaterial] = useState<Material>(MATERIALS[0]);
   const [selectedStone, setSelectedStone] = useState<Stone>(STONES[1]); // Default to Diamond
-  const [selectedSilhouette, setSelectedSilhouette] = useState<SilhouetteConfig>(() => {
-    return SILHOUETTES.find(s => s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
-  });
+  const [userSilhouetteId, setUserSilhouetteId] = useState<string | null>(null);
   const [selectedAnodization, setSelectedAnodization] = useState(ANODIZATION_PRESETS[0]);
   const [withCareKit, setWithCareKit] = useState(true);
   const [rotationAngle, setRotationAngle] = useState(0);
 
-  // Синхронизация совместимости силуэта при смене типа пирсинга
-  useEffect(() => {
-    if (!selectedSilhouette.compatibleWith.includes(basePiercing.jewelryType)) {
-      const compatible = SILHOUETTES.find(s => s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
-      setSelectedSilhouette(compatible);
-    }
-  }, [basePiercing.jewelryType, selectedSilhouette]);
+  // Вычисляемый совместимый силуэт: если выбранный пользователем силуэт совместим с типом пирсинга, используем его, иначе берем дефолтный совместимый
+  const defaultCompatibleSilhouette = SILHOUETTES.find(s => s.compatibleWith.includes(basePiercing.jewelryType)) || SILHOUETTES[0];
+  const userSelected = userSilhouetteId ? SILHOUETTES.find(s => s.id === userSilhouetteId) : null;
+  const selectedSilhouette = (userSelected && userSelected.compatibleWith.includes(basePiercing.jewelryType))
+    ? userSelected
+    : defaultCompatibleSilhouette;
+
+  const setSelectedSilhouette = (sil: SilhouetteConfig) => setUserSilhouetteId(sil.id);
 
   // Быстрые пресеты стиля
   const applyPreset = (presetName: 'classic_titanium' | 'rose_opal' | 'royal_gold' | 'ice_blue') => {

@@ -150,19 +150,30 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-10 max-w-6xl mx-auto">
           {/* Категории */}
           <div className="flex justify-center flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 ${
-                  activeCategory === cat.id
-                    ? 'bg-[#E0A98B] text-black shadow-[0_0_20px_rgba(224,169,139,0.3)] font-bold'
-                    : 'glass text-gray-400 hover:text-white hover:border-white/20'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
+            {CATEGORIES.map((cat) => {
+              const count = cat.id === 'all' 
+                ? JEWELRY_CATALOG.length 
+                : JEWELRY_CATALOG.filter(j => j.category === cat.id).length;
+
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all duration-300 flex items-center gap-2 ${
+                    activeCategory === cat.id
+                      ? 'bg-[#E0A98B] text-black shadow-[0_0_20px_rgba(224,169,139,0.3)] font-bold'
+                      : 'glass text-gray-400 hover:text-white hover:border-white/20'
+                  }`}
+                >
+                  <span>{cat.name}</span>
+                  <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
+                    activeCategory === cat.id ? 'bg-black/20 text-black font-bold' : 'bg-white/10 text-gray-400'
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           {/* Строка поиска */}
@@ -173,8 +184,17 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Поиск камня или металла..."
-              className="w-full pl-10 pr-4 py-2 rounded-full bg-black/50 border border-white/15 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#E0A98B]"
+              className="w-full pl-10 pr-9 py-2 rounded-full bg-black/50 border border-white/15 text-xs text-white placeholder-gray-500 focus:outline-none focus:border-[#E0A98B]"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                aria-label="Очистить поиск"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white text-xs w-4 h-4 rounded-full flex items-center justify-center bg-white/10"
+              >
+                ✕
+              </button>
+            )}
           </div>
         </div>
 

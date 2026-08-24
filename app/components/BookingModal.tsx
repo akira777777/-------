@@ -2,7 +2,7 @@
 
 import React, { useEffect, useId, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { X, Calendar, Clock, User, Phone, Sparkles, CheckCircle2, MessageSquare, Send } from 'lucide-react';
+import { X, Calendar, Clock, User, Phone, Sparkles, CheckCircle2, MessageSquare, Send, Copy, Check } from 'lucide-react';
 import type { PiercingType } from '../constants/piercings';
 import { useCurrency } from '../constants/currency';
 
@@ -35,6 +35,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState(TIME_SLOTS[2]);
   const [comment, setComment] = useState('');
+  const [copied, setCopied] = useState(false);
   const [minDate] = useState(() =>
     new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' }).format(new Date())
   );
@@ -72,15 +73,9 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
   const piercingName = initialData?.piercing?.name || 'Консультация & Анатомический подбор';
   const finalPriceInCzk = initialData?.totalPrice || initialData?.piercing?.basePrice || 1200;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.open(getTelegramMessageUrl(), '_blank', 'noopener,noreferrer');
-    setStep('success');
-  };
-
-  const getTelegramMessageUrl = () => {
+  const getRawMessageText = () => {
     const formattedPrice = formatPrice(finalPriceInCzk);
-    const text = encodeURIComponent(
+    return (
       `👋 Здравствуйте, AURA Piercing Studio!\n` +
       `Хочу забронировать визит к мастеру Anastasya:\n\n` +
       `📍 Услуга / Сет: ${piercingName}\n` +
@@ -90,9 +85,34 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
       `📅 Дата и время: ${selectedDate || 'Ближайшая свободная'} в ${selectedTime}\n` +
       `👤 Клиент: ${clientName || 'Не указано'} (${clientPhone || 'Не указан'})\n` +
       `${comment.trim() ? `💬 Пожелания: ${comment.trim()}\n` : ''}` +
-      `💰 Ориентир: ${formattedPrice} (${currency})`
+      `💰 Расчет: ${formattedPrice} (${currency})`
     );
+  };
+
+  const getTelegramMessageUrl = () => {
+    const text = encodeURIComponent(getRawMessageText());
     return `https://t.me/share/url?url=&text=${text}`;
+  };
+
+  const getWhatsAppMessageUrl = () => {
+    const text = encodeURIComponent(getRawMessageText());
+    return `https://api.whatsapp.com/send?text=${text}`;
+  };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(getRawMessageText());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {
+      // Fallback
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.open(getTelegramMessageUrl(), '_blank', 'noopener,noreferrer');
+    setStep('success');
   };
 
   return (
@@ -289,15 +309,35 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
                   Подтвердить запись в Telegram
                 </button>
 
-                <a
-                  href={getTelegramMessageUrl()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full p-2.5 rounded-full border border-white/10 hover:border-[#00F2FE]/50 bg-white/5 hover:bg-[#00F2FE]/10 text-xs font-semibold text-gray-300 hover:text-white flex items-center justify-center gap-2 transition-all"
-                >
-                  <MessageSquare className="w-4 h-4 text-[#00F2FE]" />
-                  Быстрый чат с Anastasya в Telegram
-                </a>
+                <div className="grid grid-cols-2 gap-2">
+                  <a
+                    href={getWhatsAppMessageUrl()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-xl border border-white/10 hover:border-[#25D366]/50 bg-white/5 hover:bg-[#25D366]/10 text-xs font-semibold text-gray-300 hover:text-white flex items-center justify-center gap-1.5 transition-all text-center"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-[#25D366]" />
+                    WhatsApp
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={handleCopy}
+                    className="p-2.5 rounded-xl border border-white/10 hover:border-[#00F2FE]/50 bg-white/5 hover:bg-[#00F2FE]/10 text-xs font-semibold text-gray-300 hover:text-white flex items-center justify-center gap-1.5 transition-all"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-[#00F2FE]" />
+                        <span className="text-[#00F2FE]">Скопировано!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5 text-gray-400" />
+                        <span>Скопировать текст</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>
@@ -311,7 +351,7 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
               Заявка готова к отправке
             </h3>
             <p className="text-sm text-gray-300 max-w-sm mx-auto leading-relaxed">
-              Вкладка Telegram открыта. Отправьте подготовленное сообщение, и Анастасия подтвердит точный адрес и бронь слота.
+              Вкладка мессенджера открыта. Отправьте подготовленное сообщение, и Анастасия подтвердит точный адрес и бронь слота.
             </p>
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-xs text-gray-300 max-w-xs mx-auto text-left space-y-1 font-mono">
               <p>• Процедура: <span className="text-white font-bold">{piercingName}</span></p>
@@ -319,15 +359,26 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
               <p>• Время: <span className="text-white font-bold">{selectedTime}</span></p>
               <p>• Расчет: <span className="text-[#E0A98B] font-bold">{formatPrice(finalPriceInCzk)}</span></p>
             </div>
-            <a
-              href={getTelegramMessageUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-premium bg-[#E0A98B] text-black font-bold py-3 px-8 text-xs inline-flex items-center gap-2 shadow-[0_0_20px_rgba(224,169,139,0.3)]"
-            >
-              <MessageSquare className="w-4 h-4" />
-              Открыть Telegram ещё раз
-            </a>
+            <div className="flex flex-wrap justify-center gap-2 pt-2">
+              <a
+                href={getTelegramMessageUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-premium bg-[#E0A98B] text-black font-bold py-2.5 px-5 text-xs inline-flex items-center gap-1.5 shadow-[0_0_20px_rgba(224,169,139,0.3)]"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                Telegram
+              </a>
+              <a
+                href={getWhatsAppMessageUrl()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-premium border-white/20 text-white hover:border-[#25D366] hover:text-[#25D366] py-2.5 px-5 text-xs inline-flex items-center gap-1.5"
+              >
+                <MessageSquare className="w-3.5 h-3.5 text-[#25D366]" />
+                WhatsApp
+              </a>
+            </div>
             <button
               onClick={() => {
                 setStep('form');

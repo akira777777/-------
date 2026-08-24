@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
@@ -17,21 +17,15 @@ type PainFilterType = 'all' | 'low' | 'medium' | 'high';
 
 export default function AnatomyMap({ activeZone, onAddtoConfigurator, onSelectForEarSet }: AnatomyMapProps) {
   const { formatPrice } = useCurrency();
-  const [selectedPiercing, setSelectedPiercing] = useState<PiercingType | null>(() => {
-    return PIERCINGS.find(p => p.zone === activeZone) || null;
-  });
+  const [selectedPiercingId, setSelectedPiercingId] = useState<string | null>(null);
   const [hoveredPiercing, setHoveredPiercing] = useState<PiercingType | null>(null);
   const [painFilter, setPainFilter] = useState<PainFilterType>('all');
 
-  // Автоматическая синхронизация при смене активной зоны
-  useEffect(() => {
-    if (!selectedPiercing || selectedPiercing.zone !== activeZone) {
-      const defaultForZone = PIERCINGS.find((p) => p.zone === activeZone) || null;
-      setSelectedPiercing(defaultForZone);
-    }
-  }, [activeZone, selectedPiercing]);
-
   const zonePiercings = PIERCINGS.filter((p) => p.zone === activeZone);
+
+  // Вычисляемый выбранный прокол: если выбранный ID принадлежит текущей зоне, берем его, иначе берем первый прокол зоны
+  const selectedPiercing = (selectedPiercingId ? zonePiercings.find((p) => p.id === selectedPiercingId) : null) ?? zonePiercings[0] ?? null;
+  const setSelectedPiercing = (p: PiercingType | null) => setSelectedPiercingId(p ? p.id : null);
   
   const filteredPiercings = zonePiercings.filter((p) => {
     if (painFilter === 'low') return p.painLevel <= 2;

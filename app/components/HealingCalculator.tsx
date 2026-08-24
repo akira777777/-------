@@ -15,8 +15,9 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
     return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Prague' }).format(new Date());
   });
 
-  // Расчет дат
-  const baseDate = new Date(procedureDate || new Date());
+  // Безопасный расчет дат
+  const parsedDate = procedureDate ? new Date(procedureDate) : new Date();
+  const baseDate = isNaN(parsedDate.getTime()) ? new Date() : parsedDate;
   const now = new Date();
   
   // Дата даунсайза (+4 недели или 0 если не требуется)
