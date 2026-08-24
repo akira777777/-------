@@ -75,6 +75,9 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             <span className="w-1.5 h-1.5 rounded-full bg-[#E0A98B]" />
             Сет-билдер
           </button>
+          <button onClick={() => scrollTo('editorial')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
+            Вдохновение
+          </button>
           <button onClick={() => scrollTo('jewelry')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
             Витрина
           </button>
@@ -159,6 +162,9 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           </button>
           <button onClick={() => scrollTo('ear-curation')} className="block w-full text-left py-2 text-sm text-[#E0A98B] font-semibold hover:text-white border-b border-white/5">
             ✨ Сет-билдер уха (Скидки до -15%)
+          </button>
+          <button onClick={() => scrollTo('editorial')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
+            📷 Визуальное вдохновение
           </button>
           <button onClick={() => scrollTo('jewelry')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
             💎 Витрина украшений
