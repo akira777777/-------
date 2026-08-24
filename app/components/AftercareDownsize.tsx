@@ -1,45 +1,80 @@
 'use client';
 
 import React from 'react';
-import { Droplets, Clock, RefreshCw, Sparkles, CheckCircle2, AlertTriangle } from 'lucide-react';
+import Image from 'next/image';
+import { Droplets, Clock, RefreshCw, Sparkles, CheckCircle2, AlertTriangle, PackageCheck } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AftercareDownsize() {
   const careSteps = [
     {
       title: 'Изотонический уход',
-      description: 'Орошайте прокол 2 раза в день стерильным физраствором или спреем Brine Healer. Аккуратно просушивайте нетканой салфеткой.',
+      description: 'Орошайте прокол 2 раза в день стерильным спреем Brine Healer. Аккуратно просушивайте нетканой салфеткой без ворса.',
       icon: <Droplets className="w-6 h-6 text-[#00F2FE]" />,
       badge: 'Ежедневно'
     },
     {
       title: 'Режим сна и ткани',
-      description: 'Не спите на стороне свежего прокола (используйте подушку-бублик). Выбирайте натуральные гладкие ткани без выступающих петель.',
+      description: 'Не спите на стороне свежего прокола (используйте анатомическую подушку-бублик). Выбирайте гладкие натуральные ткани.',
       icon: <Clock className="w-6 h-6 text-[#E0A98B]" />,
       badge: 'Первые 14 дней'
     },
     {
       title: 'Что под запретом',
-      description: 'Категорически запрещены: спирт, перекись водорода, мази, прокручивание сережки, посещение бань, саун и открытых водоемов.',
+      description: 'Категорически запрещены: спирт, перекись водорода, мази, прокручивание сережки, посещение саун, бань и открытых водоемов.',
       icon: <AlertTriangle className="w-6 h-6 text-[#F38181]" />,
       badge: 'Строгий запрет'
     },
   ];
 
   return (
-    <section id="aftercare" className="py-24 px-6 bg-black/40 border-t border-white/5 relative">
+    <section id="aftercare" className="py-24 px-4 sm:px-6 bg-black/40 border-t border-white/5 relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="badge-luxury mb-3">
+          <span className="badge-luxury mb-3 font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             Забота и Сопровождение
           </span>
           <h2 className="text-3xl md:text-5xl font-heading font-bold text-white mb-4">
-            Гайд по заживлению & Даунсайз
+            Гайд по заживлению &amp; Набор ухода
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Мы ведем каждого клиента до полного формирования канала. Правильный уход гарантирует идеальный эстетический результат.
+            Мы сопровождаем каждого клиента до полного формирования здорового канала. Правильный уход гарантирует идеальный эстетический результат.
           </p>
+        </div>
+
+        {/* Большой визуальный блок с фото ухода Brine Healer */}
+        <div className="mb-14 relative min-h-[280px] md:min-h-[380px] rounded-[2.5rem] overflow-hidden border border-white/15 shadow-2xl">
+          <Image
+            src="/images/care-box-unboxing.jpg"
+            alt="Премиальный бокс ухода Brine Healer: спрей 150ml, стерильные салфетки и ваучер на бесплатный даунсайз"
+            fill
+            sizes="(max-width: 1280px) 100vw, 1280px"
+            className="object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/45 to-transparent" />
+          <div className="relative z-10 max-w-xl p-8 md:p-12 flex flex-col justify-center h-full">
+            <div className="flex items-center gap-2 mb-3">
+              <PackageCheck className="w-4 h-4 text-[#00F2FE]" />
+              <span className="text-[10px] uppercase tracking-[0.24em] font-bold text-[#00F2FE] font-mono">
+                Brine Healer Aftercare Kit
+              </span>
+            </div>
+            <h3 className="text-2xl md:text-4xl font-heading font-bold text-white mb-3 leading-snug">
+              Всё необходимое для спокойного заживления
+            </h3>
+            <p className="text-xs md:text-sm text-gray-300 leading-relaxed mb-5">
+              Изотонический стерильный спрей фармацевтической чистоты устраняет раздражение и предотвращает образование гранулем, сохраняя естественный микробиом кожи.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs text-white backdrop-blur font-mono">
+                ✓ Спрей 150ml с мелкодисперсным распылением
+              </span>
+              <span className="px-3.5 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs text-[#00F2FE] backdrop-blur font-mono">
+                ✓ Бесплатный ваучер на Downsize
+              </span>
+            </div>
+          </div>
         </div>
 
         {/* 3 карточки ухода */}
@@ -57,7 +92,7 @@ export default function AftercareDownsize() {
                   <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
                     {step.icon}
                   </div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300">
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/5 border border-white/10 text-gray-300 font-mono">
                     {step.badge}
                   </span>
                 </div>
@@ -70,8 +105,8 @@ export default function AftercareDownsize() {
           ))}
         </div>
 
-        {/* Большой интерактивный блок Downsizing */}
-        <div className="glass-card p-8 md:p-12 rounded-[2.5rem] border border-[#E0A98B]/30 bg-gradient-to-br from-[#E0A98B]/10 via-transparent to-transparent">
+        {/* Блок Downsizing */}
+        <div className="glass-card p-8 md:p-12 rounded-[2.5rem] border border-[#E0A98B]/30 bg-gradient-to-br from-[#E0A98B]/10 via-transparent to-transparent shadow-2xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-7">
               <span className="text-xs font-mono uppercase tracking-widest text-[#D4AF37] font-bold block mb-2">
@@ -83,7 +118,7 @@ export default function AftercareDownsize() {
               <p className="text-xs sm:text-sm text-gray-300 leading-relaxed mb-6">
                 При первичном проколе мастер устанавливает удлиненную основу (лабрет) с запасом под естественный отек. 
                 Через 3–4 недели отек спадает, и сережка становится длинной. Если вовремя не заменить её на короткую, 
-                украшение наклонится под весом или одеждой, что приведет к кривому заживлению и образованию гранулем.
+                украшение наклонится под весом или одеждой, что приведет к кривому заживлению и образованию шишек (гранулем).
               </p>
               <div className="space-y-2.5">
                 <div className="flex items-center gap-2.5 text-xs text-gray-200">
@@ -92,12 +127,12 @@ export default function AftercareDownsize() {
                 </div>
                 <div className="flex items-center gap-2.5 text-xs text-gray-200">
                   <CheckCircle2 className="w-4 h-4 text-[#E0A98B] shrink-0" />
-                  <span>Ультразвуковая чистка украшений и антисептический осмотр</span>
+                  <span>Ультразвуковая антисептическая чистка украшений и осмотр канала</span>
                 </div>
               </div>
             </div>
 
-            <div className="lg:col-span-5 bg-black/50 p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl">
+            <div className="lg:col-span-5 bg-black/60 p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl">
               <div className="flex items-center gap-3 mb-6 text-[#E0A98B]">
                 <RefreshCw className="w-5 h-5 animate-spin [animation-duration:8s]" />
                 <span className="font-heading font-bold text-sm text-white">График планового обслуживания</span>

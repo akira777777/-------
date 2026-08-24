@@ -3,14 +3,14 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Activity, Info, Sparkles, Lock } from 'lucide-react';
+import { ShieldCheck, Award, Activity, Info, Sparkles, Lock, Building2 } from 'lucide-react';
 
 export default function SafetySection() {
   const protocols = [
     {
       title: 'Медицинская автоклавация',
       subtitle: 'Класс B (134°C, фракционный вакуум)',
-      description: 'Все многоразовые инструменты проходят 4-ступенчатую дезинфекцию и стерилизуются в автоклаве EN 13060. Индивидуальный крафт-пакет вскрывается строго при вас.',
+      description: 'Все инструменты проходят 4-ступенчатую дезинфекцию и стерилизуются в автоклаве EN 13060. Индивидуальный крафт-пакет вскрывается строго при вас.',
       icon: <ShieldCheck className="w-7 h-7 text-[#E0A98B]" />,
       stats: '100% стерильность'
     },
@@ -23,7 +23,7 @@ export default function SafetySection() {
     },
     {
       title: 'Лазерная заточка игл',
-      subtitle: 'Одноразовые катетеры и блейды',
+      subtitle: 'Одноразовые блейды и катетеры',
       description: 'Специальная трехгранная заточка бережно раздвигает волокна кожи, не вырывая ткани. Прокол заживает в 2 раза быстрее, чем после пистолета.',
       icon: <Activity className="w-7 h-7 text-[#00F2FE]" />,
       stats: 'Минимальный отек'
@@ -31,13 +31,13 @@ export default function SafetySection() {
   ];
 
   return (
-    <section id="safety" className="py-24 px-6 bg-surface/10 border-t border-white/5 relative overflow-hidden">
+    <section id="safety" className="py-24 px-4 sm:px-6 bg-surface/10 border-t border-white/5 relative overflow-hidden">
       {/* Фоновые градиенты */}
       <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-[#E0A98B]/5 blur-[160px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="badge-luxury mb-3">
+          <span className="badge-luxury mb-3 font-mono">
             <Sparkles className="w-3.5 h-3.5" />
             Медицинский регламент
           </span>
@@ -49,41 +49,61 @@ export default function SafetySection() {
           </p>
         </div>
 
-        {/* Большой визуальный блок с фото стерильного сетапа */}
-        <div className="mb-14 relative min-h-[280px] md:min-h-[360px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl">
-          <Image
-            src="/images/sterile-procedure-tray.webp"
-            alt="Стерильный хирургический лоток с крафт-пакетом, титановым украшением ASTM F-136 и одноразовой иглой лазерной заточки"
-            fill
-            sizes="(max-width: 1280px) 100vw, 1280px"
-            className="object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
-          <div className="relative z-10 max-w-xl p-8 md:p-12 flex flex-col justify-center h-full">
-            <div className="flex items-center gap-2 mb-3">
-              <Lock className="w-4 h-4 text-[#00F2FE]" />
-              <span className="text-[10px] uppercase tracking-[0.24em] font-bold text-[#00F2FE]">
-                Индивидуальный крафт-пакет
-              </span>
-            </div>
-            <h3 className="text-2xl md:text-3xl font-heading font-bold text-white mb-3">
-              Вскрытие упаковки исключительно при вас
-            </h3>
-            <p className="text-xs md:text-sm text-gray-300 leading-relaxed mb-4">
-              Каждое украшение и одноразовый инструмент запечатываются в термостойкий пакет с химическим индикатором стерилизации, который меняет цвет при достижении 134°C в автоклаве.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-white backdrop-blur">
-                ✓ Класс B EN 13060
-              </span>
-              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-white backdrop-blur">
-                ✓ Одноразовые стерильные перчатки
-              </span>
-              <span className="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-[11px] text-[#D4AF37] backdrop-blur">
-                ✓ ISO 5832-3 Titanium
-              </span>
+        {/* Сетка двух визуальных фото: Лоток + Интерьер студии */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-14">
+          
+          {/* Фото 1: Стерильный лоток */}
+          <div className="relative min-h-[300px] md:min-h-[380px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group">
+            <Image
+              src="/images/sterile-procedure-tray.webp"
+              alt="Стерильный хирургический лоток с крафт-пакетом, титановым украшением ASTM F-136 и одноразовой иглой лазерной заточки"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
+            <div className="absolute left-6 right-6 bottom-6">
+              <div className="flex items-center gap-2 mb-2">
+                <Lock className="w-4 h-4 text-[#00F2FE]" />
+                <span className="text-[10px] uppercase tracking-[0.24em] font-bold text-[#00F2FE] font-mono">
+                  Индивидуальный крафт-пакет
+                </span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white mb-2">
+                Вскрытие упаковки исключительно при вас
+              </h3>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Каждое украшение стерилизуется в пакете с термохимическим индикатором, меняющим цвет при 134°C.
+              </p>
             </div>
           </div>
+
+          {/* Фото 2: Интерьер процедурного кабинета */}
+          <div className="relative min-h-[300px] md:min-h-[380px] rounded-[2.5rem] overflow-hidden border border-white/10 shadow-2xl group">
+            <Image
+              src="/images/studio-luxury-interior.jpg"
+              alt="Интерьер процедурного кабинета студии AURA в Праге: анатомическое кресло, медицинский автоклав и витрина золотых украшений"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent" />
+            <div className="absolute left-6 right-6 bottom-6">
+              <div className="flex items-center gap-2 mb-2">
+                <Building2 className="w-4 h-4 text-[#E0A98B]" />
+                <span className="text-[10px] uppercase tracking-[0.24em] font-bold text-[#E0A98B] font-mono">
+                  AURA Boutique Prague
+                </span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-heading font-bold text-white mb-2">
+                Атмосфера приватности и чистоты
+              </h3>
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Кабинет оснащен эргономичным креслом, бестеневым хирургическим светом и автоклавом Melag класса B.
+              </p>
+            </div>
+          </div>
+
         </div>
 
         {/* 3 карточки стандартов */}

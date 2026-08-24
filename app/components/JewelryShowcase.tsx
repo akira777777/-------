@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Sparkles, Gem, ArrowUpRight, Search } from 'lucide-react';
+import { Gem, ArrowUpRight, Search } from 'lucide-react';
 import Image from 'next/image';
 import { useCurrency } from '../constants/currency';
 
@@ -15,7 +15,7 @@ interface JewelryItem {
   price: number;
   badge?: string;
   gem: string;
-  colorHex: string;
+  image: string;
 }
 
 const JEWELRY_CATALOG: JewelryItem[] = [
@@ -28,18 +28,18 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 5900,
     badge: 'Bestseller',
     gem: 'Бриллианты огранки Маркиз',
-    colorHex: '#D4AF37',
+    image: '/images/marquise-diamond-cluster.jpg',
   },
   {
     id: 'j2',
-    name: 'AURA Opal Arc',
+    name: 'AURA Opal Arc Top',
     category: 'opals',
     material: 'Имплантационный титан ASTM F-136',
     threading: 'Threadless (Push-Pin)',
     price: 1600,
     badge: 'New',
     gem: 'Синтетический белый опал кабошон',
-    colorHex: '#E2E8F0',
+    image: '/images/opal-arc-jewelry.jpg',
   },
   {
     id: 'j3',
@@ -50,7 +50,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 7200,
     badge: 'Luxury',
     gem: 'Кристаллы Swarovski по кругу',
-    colorHex: '#E0A98B',
+    image: '/images/eternity-clicker-ring.jpg',
   },
   {
     id: 'j4',
@@ -60,7 +60,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     threading: 'Threadless (Push-Pin)',
     price: 1400,
     gem: 'Тройной фианит в крапанах',
-    colorHex: '#C0C0C0',
+    image: '/images/trinity-titanium-top.jpg',
   },
   {
     id: 'j5',
@@ -71,7 +71,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     price: 9200,
     badge: 'Exclusive',
     gem: 'Гидротермальный изумруд',
-    colorHex: '#50C878',
+    image: '/images/emerald-cascade-cluster.jpg',
   },
   {
     id: 'j6',
@@ -81,7 +81,7 @@ const JEWELRY_CATALOG: JewelryItem[] = [
     threading: 'Threadless (Push-Pin)',
     price: 1850,
     gem: 'Голубой опал Aurora Borealis',
-    colorHex: '#8A2BE2',
+    image: '/images/celestial-moon-top.jpg',
   },
 ];
 
@@ -114,7 +114,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
 
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-3">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-3 font-mono">
             <Gem className="w-3.5 h-3.5" />
             Ювелирный лукбук
           </span>
@@ -122,7 +122,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
             Коллекция дизайнерских украшений
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Каждое изделие изготовлено из гипоаллергенных металлов высшей пробы: имплантационный титан ASTM F-136, золото 14k/18k и натуральные камни с ручной закрепкой.
+            Каждое изделие изготовлено из гипоаллергенных металлов высшей пробы: имплантационный титан ASTM F-136, золото 14k/18k и натуральные камни с ручной крапановой закрепкой.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
           />
           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
           <div className="relative z-10 max-w-lg p-6 sm:p-10 flex flex-col justify-center h-full">
-            <span className="text-xs uppercase tracking-[0.24em] text-[#E0A98B] font-bold mb-2">
+            <span className="text-xs uppercase tracking-[0.24em] text-[#E0A98B] font-bold mb-2 font-mono">
               Ювелирный стандарт ASTM F-136
             </span>
             <p className="text-xl sm:text-3xl font-heading font-bold leading-snug text-white">
@@ -178,7 +178,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
           </div>
         </div>
 
-        {/* Сетка товаров */}
+        {/* Сетка товаров с реальными макро-фотографиями */}
         <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           <AnimatePresence>
             {filtered.map((item) => (
@@ -189,31 +189,27 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
-                className="glass rounded-[2.5rem] p-6 border border-white/5 hover:border-[#E0A98B]/40 transition-all duration-300 group flex flex-col justify-between hover:shadow-[0_10px_35px_rgba(224,169,139,0.15)] relative"
+                className="glass rounded-[2.5rem] p-6 border border-white/10 hover:border-[#E0A98B]/40 transition-all duration-300 group flex flex-col justify-between hover:shadow-[0_10px_35px_rgba(224,169,139,0.15)] relative overflow-hidden"
               >
                 {/* Бейдж */}
                 {item.badge && (
-                  <span className="absolute top-6 right-6 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-[#E0A98B]/20 text-[#E0A98B] border border-[#E0A98B]/30 font-mono">
+                  <span className="absolute top-6 right-6 z-10 px-3 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/70 backdrop-blur-md text-[#E0A98B] border border-[#E0A98B]/40 font-mono shadow-lg">
                     {item.badge}
                   </span>
                 )}
 
-                {/* Графический макет украшения */}
-                <div className="relative w-full h-48 rounded-2xl bg-black/50 border border-white/5 flex items-center justify-center mb-6 overflow-hidden group-hover:border-[#E0A98B]/20 transition-colors">
-                  <div
-                    className="w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-500 group-hover:scale-115 shadow-2xl relative"
-                    style={{
-                      background: `radial-gradient(circle, ${item.colorHex}33 0%, rgba(0,0,0,0) 70%)`,
-                    }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-full border-2 border-white/40 flex items-center justify-center shadow-lg"
-                      style={{ borderColor: item.colorHex }}
-                    >
-                      <Sparkles className="w-5 h-5" style={{ color: item.colorHex }} />
-                    </div>
-                  </div>
-                  <span className="absolute bottom-3 left-3 text-[10px] text-gray-500 uppercase tracking-widest font-mono">
+                {/* Фото украшения */}
+                <div className="relative w-full h-56 rounded-2xl bg-black/60 border border-white/10 flex items-center justify-center mb-6 overflow-hidden group-hover:border-[#E0A98B]/30 transition-all shadow-inner">
+                  <Image
+                    src={item.image}
+                    alt={item.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-108"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                  
+                  <span className="absolute bottom-3 left-3 text-[10px] text-gray-300 bg-black/60 backdrop-blur px-2.5 py-1 rounded-full border border-white/10 uppercase tracking-widest font-mono">
                     {item.threading}
                   </span>
                 </div>
@@ -238,7 +234,7 @@ export default function JewelryShowcase({ onSelectJewelry }: { onSelectJewelry: 
                   </div>
                   <button
                     onClick={() => onSelectJewelry(item)}
-                    className="p-3 rounded-full bg-white/5 group-hover:bg-[#E0A98B] group-hover:text-black text-white transition-all duration-300 shadow-md"
+                    className="p-3 rounded-full bg-white/5 group-hover:bg-[#E0A98B] group-hover:text-black text-white transition-all duration-300 shadow-md flex items-center justify-center"
                     aria-label="Примерить и забронировать"
                   >
                     <ArrowUpRight className="w-5 h-5" />
