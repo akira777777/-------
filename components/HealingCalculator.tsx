@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PIERCINGS, type PiercingType } from '@/constants/piercings';
-import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle, CalendarPlus, Activity } from 'lucide-react';
+import { Clock, RefreshCw, Sparkles, CheckCircle2, ShieldCheck, AlertCircle, CalendarPlus, Activity, Download } from 'lucide-react';
 
 interface HealingCalculatorProps {
   onBookDownsize?: () => void;
@@ -59,6 +59,34 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
     const dateStr = downsizeDate.toISOString().replace(/-|:|\.\d+/g, '').slice(0, 8);
     const dates = `${dateStr}T110000Z/${dateStr}T120000Z`;
     return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&dates=${dates}&location=Prague`;
+  };
+
+  // Universal iCalendar .ics export (Apple Calendar / Outlook / Offline)
+  const downloadIcsFile = () => {
+    const dateStr = downsizeDate.toISOString().replace(/-|:|\.\d+/g, '').slice(0, 8);
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//AURA Piercing Studio//Healing Calculator//RU',
+      'CALSCALE:GREGORIAN',
+      'BEGIN:VEVENT',
+      `SUMMARY:AURA Studio: Плановый даунсайз (${selectedPiercing.name})`,
+      `DESCRIPTION:Бесплатная замена первичной основы и осмотр прокола ${selectedPiercing.name} у мастера Anastasya в AURA Studio Praha.`,
+      'LOCATION:Praha',
+      `DTSTART;VALUE=DATE:${dateStr}`,
+      `DTEND;VALUE=DATE:${dateStr}`,
+      'STATUS:CONFIRMED',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', `AURA_Downsize_${selectedPiercing.id}.ics`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
@@ -286,23 +314,33 @@ export default function HealingCalculator({ onBookDownsize }: HealingCalculatorP
               Помните: даунсайз в студии AURA проводится <strong className="text-white">бесплатно</strong> в рамках пожизненного сопровождения каждого прокола.
             </p>
           </div>
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
             {selectedPiercing.downsizeRecommended && (
-              <a
-                href={getGoogleCalendarUrl()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-premium border-white/20 text-gray-200 hover:border-[#00F2FE] hover:text-[#00F2FE] text-xs py-2 px-4 flex items-center gap-1.5"
-                title="Добавить дату даунсайза в Google Календарь"
-              >
-                <CalendarPlus className="w-3.5 h-3.5" />
-                В календарь
-              </a>
+              <>
+                <a
+                  href={getGoogleCalendarUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-premium border-white/20 text-gray-200 hover:border-[#00F2FE] hover:text-[#00F2FE] text-xs py-2 px-3.5 flex items-center gap-1.5 transition-all"
+                  title="Добавить дату даунсайза в Google Календарь"
+                >
+                  <CalendarPlus className="w-3.5 h-3.5 text-[#00F2FE]" />
+                  Google
+                </a>
+                <button
+                  onClick={downloadIcsFile}
+                  className="btn-premium border-white/20 text-gray-200 hover:border-[#E0A98B] hover:text-[#E0A98B] text-xs py-2 px-3.5 flex items-center gap-1.5 transition-all"
+                  title="Скачать файл события .ics для Apple Календаря / Outlook"
+                >
+                  <Download className="w-3.5 h-3.5 text-[#E0A98B]" />
+                  iCal / Outlook
+                </button>
+              </>
             )}
             {onBookDownsize && (
               <button
                 onClick={onBookDownsize}
-                className="btn-premium bg-[#E0A98B] text-black font-bold text-xs py-2 px-5 hover:bg-white"
+                className="btn-premium bg-[#E0A98B] text-black font-bold text-xs py-2 px-4 hover:bg-white transition-all shadow-[0_0_15px_rgba(224,169,139,0.3)]"
               >
                 Записаться на осмотр
               </button>

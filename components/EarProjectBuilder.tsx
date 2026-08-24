@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type PiercingType } from '@/constants/piercings';
+import { ZONE_PATHS } from '@/constants/svg_assets';
 import { useCurrency } from '@/constants/currency';
-import { Sparkles, Layers, Trash2, CheckCircle2, Droplets } from 'lucide-react';
+import { Sparkles, Layers, Trash2, CheckCircle2, Droplets, Info } from 'lucide-react';
 import type { BookingData } from '@/components/BookingModal';
 
 interface EarProjectBuilderProps {
@@ -20,6 +21,7 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
     earPiercings[0], // First Lobe
     earPiercings[2], // Helix
   ]);
+  const [hoveredPiercing, setHoveredPiercing] = useState<PiercingType | null>(null);
 
   const togglePiercing = (piercing: PiercingType) => {
     if (selectedPiercings.some((p) => p.id === piercing.id)) {
@@ -88,14 +90,16 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
     });
   };
 
+  const earSvg = ZONE_PATHS.ear;
+
   return (
     <section id="ear-curation" className="py-24 px-4 sm:px-6 bg-surface/25 border-t border-white/5 relative overflow-hidden">
       {/* Декоративное свечение */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#E0A98B]/5 blur-[160px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-14">
-          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-3">
+        <div className="text-center mb-12">
+          <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full glass border border-[#E0A98B]/20 text-[#E0A98B] text-xs font-semibold uppercase tracking-widest mb-3 font-mono">
             <Layers className="w-3.5 h-3.5" />
             Ear Curation Studio
           </span>
@@ -103,7 +107,7 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
             Соберите свой авторский сет проколов
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto text-sm md:text-base leading-relaxed">
-            Комбинируйте несколько точек в один визит: Анастасия построит единую анатомическую композицию, а вы получите пакетную скидку до 15% и бесплатный набор ухода.
+            Комбинируйте точки в один визит: Анастасия построит единую анатомическую композицию, а вы получите скидку до 15% и бесплатный набор ухода.
           </p>
         </div>
 
@@ -140,11 +144,11 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Левая колонка: Интерактивный выбор точек для сета (7 колонок) */}
-          <div className="lg:col-span-7 glass-card p-6 sm:p-8 rounded-[2.5rem] border border-white/10 shadow-2xl">
-            <div className="flex justify-between items-center mb-6">
+          {/* Левая колонка: Визуализатор анатомии уха + Сетка переключаемых точек (7 колонок) */}
+          <div className="lg:col-span-7 glass-card p-6 sm:p-8 rounded-[2.5rem] border border-white/10 shadow-2xl space-y-6">
+            <div className="flex justify-between items-center">
               <h3 className="text-xl font-heading font-bold text-white flex items-center gap-2">
-                <span>Точки на ушной раковине</span>
+                <span>Интерактивная карта сетапа</span>
                 <span className="text-xs font-mono px-2 py-0.5 rounded bg-white/10 text-gray-300 font-normal">
                   {selectedPiercings.length} из 5 выбрано
                 </span>
@@ -156,8 +160,99 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
               )}
             </div>
 
+            {/* Интерактивный холст ушной раковины */}
+            <div className="relative w-full aspect-[4/3] max-h-[340px] bg-black/60 rounded-3xl border border-white/10 flex items-center justify-center overflow-hidden p-4 shadow-inner">
+              <div className="absolute inset-0 bg-[radial-gradient(#E0A98B_1px,transparent_1px)] [background-size:20px_20px] opacity-15 pointer-events-none" />
+              
+              <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[9px] uppercase tracking-widest text-gray-300 font-mono">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#E0A98B] animate-pulse" />
+                Live Geometry Preview
+              </div>
+
+              <div className="relative w-full max-w-[280px] aspect-square flex items-center justify-center">
+                <svg viewBox="0 0 100 100" className="w-full h-full filter drop-shadow-[0_0_15px_rgba(224,169,139,0.25)]">
+                  <defs>
+                    <linearGradient id="earBuilderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#FFF" stopOpacity="0.9" />
+                      <stop offset="50%" stopColor="#E0A98B" stopOpacity="0.8" />
+                      <stop offset="100%" stopColor="#D4AF37" stopOpacity="0.9" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Направляющие */}
+                  <path d={earSvg.guides} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.6" strokeDasharray="1.5 2" />
+
+                  {/* Главный контур */}
+                  <path d={earSvg.outline} fill="rgba(224,169,139,0.03)" stroke="url(#earBuilderGrad)" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+
+                  {/* Внутренние складки */}
+                  <path d={earSvg.inner} fill="none" stroke="#D4AF37" strokeWidth="0.8" strokeLinecap="round" strokeDasharray="2 2" className="opacity-40" />
+
+                  {/* Соединительные линии между выбранными проколами */}
+                  {selectedPiercings.length > 1 && (
+                    <path
+                      d={selectedPiercings.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.hotspotCoords.x} ${p.hotspotCoords.y}`).join(' ')}
+                      fill="none"
+                      stroke="#E0A98B"
+                      strokeWidth="0.8"
+                      strokeDasharray="2 2"
+                      className="opacity-60 transition-all duration-500"
+                    />
+                  )}
+                </svg>
+
+                {/* Интерактивные точки на холсте */}
+                {earPiercings.map((piercing) => {
+                  const isSelected = selectedPiercings.some((p) => p.id === piercing.id);
+                  const isHovered = hoveredPiercing?.id === piercing.id;
+
+                  return (
+                    <div
+                      key={piercing.id}
+                      className="absolute -translate-x-1/2 -translate-y-1/2 z-20"
+                      style={{ left: `${piercing.hotspotCoords.x}%`, top: `${piercing.hotspotCoords.y}%` }}
+                    >
+                      {/* Ореол */}
+                      {isSelected && (
+                        <span className="absolute -inset-2 rounded-full bg-[#E0A98B]/40 animate-ping pointer-events-none" />
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => togglePiercing(piercing)}
+                        onMouseEnter={() => setHoveredPiercing(piercing)}
+                        onMouseLeave={() => setHoveredPiercing(null)}
+                        aria-label={`Переключить ${piercing.name}`}
+                        className={`relative w-4 h-4 rounded-full border transition-all flex items-center justify-center cursor-pointer focus-visible:ring-2 focus-visible:ring-[#E0A98B] ${
+                          isSelected
+                            ? 'bg-[#E0A98B] border-white shadow-[0_0_15px_#E0A98B] scale-125'
+                            : 'bg-black/80 border-white/30 hover:border-[#E0A98B] scale-90'
+                        }`}
+                      >
+                        <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-black font-bold' : 'bg-white/40'}`} />
+                      </button>
+
+                      {/* Тултип */}
+                      <AnimatePresence>
+                        {(isHovered || isSelected) && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 4, scale: 0.85 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 2, scale: 0.85 }}
+                            className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-2.5 py-1 rounded-lg glass border border-white/20 text-[10px] text-white font-mono whitespace-nowrap shadow-xl pointer-events-none z-30"
+                          >
+                            {piercing.name.split(' (')[0]}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Сетка переключаемых точек */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {earPiercings.map((piercing) => {
                 const isSelected = selectedPiercings.some((p) => p.id === piercing.id);
 
@@ -165,14 +260,16 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
                   <button
                     key={piercing.id}
                     onClick={() => togglePiercing(piercing)}
-                    className={`p-4 rounded-2xl border text-left transition-all flex items-center justify-between group ${
+                    onMouseEnter={() => setHoveredPiercing(piercing)}
+                    onMouseLeave={() => setHoveredPiercing(null)}
+                    className={`p-3.5 rounded-2xl border text-left transition-all flex items-center justify-between group ${
                       isSelected
                         ? 'border-[#E0A98B] bg-[#E0A98B]/15 shadow-[0_0_20px_rgba(224,169,139,0.2)]'
                         : 'border-white/5 bg-white/5 hover:border-white/20'
                     }`}
                   >
                     <div>
-                      <span className="text-sm font-bold text-white block group-hover:text-gold-rose transition-colors">
+                      <span className="text-xs sm:text-sm font-bold text-white block group-hover:text-gold-rose transition-colors">
                         {piercing.name.split(' (')[0]}
                       </span>
                       <span className="text-[10px] text-gray-400 font-mono">
@@ -278,6 +375,11 @@ export default function EarProjectBuilder({ onBookProject }: EarProjectBuilderPr
                   {formatPrice(total)}
                 </span>
               </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-white/5 border border-white/5 flex items-center gap-2 text-[11px] text-gray-400">
+              <Info className="w-3.5 h-3.5 text-[#E0A98B] shrink-0" />
+              <span>Точный подбор накруток и примерка проводятся очно с Анастасией.</span>
             </div>
 
             <button

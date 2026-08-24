@@ -94,8 +94,6 @@ export default function BookingModal({ isOpen, onClose, initialData }: BookingMo
     return `https://t.me/yacure0?text=${text}`;
   };
 
-  const getTelegramDirectUrl = () => 'https://t.me/yacure0';
-
   const getWhatsAppMessageUrl = () => {
     const text = encodeURIComponent(getRawMessageText());
     return `https://api.whatsapp.com/send?text=${text}`;

@@ -17,10 +17,10 @@ import AftercareDownsize from '@/components/AftercareDownsize';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
 import { type BookingData } from '@/components/BookingModal';
-import { SITE_INFO, FAQ_ITEMS, SAFETY_STEPS, AFTERCARE_INFO, SOCIAL_LINKS } from '@/constants/content_files/content';
+import { SOCIAL_LINKS } from '@/constants/content_files/content';
 import { ZONES, type ZoneId, type PiercingType } from '@/constants/piercings';
 import { CurrencyProvider, useCurrency } from '@/constants/currency';
-import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock, Layers, Instagram } from 'lucide-react';
+import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Clock, Layers, Instagram } from 'lucide-react';
 
 const JewelryConfigurator = dynamic(() => import('@/components/JewelryConfigurator'), {
   loading: () => (

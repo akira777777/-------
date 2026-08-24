@@ -10,16 +10,43 @@ interface NavbarProps {
   onOpenBooking: () => void;
 }
 
+const NAV_ITEMS = [
+  { id: 'map', label: 'Карта проколов' },
+  { id: 'ear-curation', label: 'Сет-билдер', highlight: true },
+  { id: 'editorial', label: 'Вдохновение' },
+  { id: 'jewelry', label: 'Витрина' },
+  { id: 'healing', label: 'Заживление' },
+  { id: 'masters', label: 'Anastasya' },
+  { id: 'safety', label: 'Безопасность' },
+  { id: 'testimonials', label: 'Отзывы' },
+];
+
 export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [currencyDropdownOpen, setCurrencyDropdownOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
   const { currency, setCurrency } = useCurrency();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+
+      // Section spy
+      const scrollPosition = window.scrollY + 200;
+      for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
+        const item = NAV_ITEMS[i];
+        const el = document.getElementById(item.id);
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(item.id);
+          break;
+        }
+      }
+    };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -54,10 +81,10 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const currencyOptions: CurrencyCode[] = ['CZK', 'EUR', 'USD'];
 
   return (
-    <nav className={`fixed top-0 w-full z-40 px-2.5 sm:px-6 py-2.5 sm:py-4 transition-all duration-300 ${scrolled ? 'bg-black/40 backdrop-blur-md' : ''}`}>
-      <div className={`max-w-7xl mx-auto glass rounded-2xl px-3 sm:px-6 py-2.5 sm:py-3 flex justify-between items-center border backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] transition-all duration-300 ${scrolled ? 'border-white/15 shadow-[0_10px_40px_rgba(0,0,0,0.7)]' : 'border-white/10'}`}>
+    <nav className={`fixed top-0 w-full z-40 px-2.5 sm:px-6 py-2.5 sm:py-4 transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md' : ''}`}>
+      <div className={`max-w-7xl mx-auto glass rounded-2xl px-3 sm:px-6 py-2 sm:py-3 flex justify-between items-center border backdrop-blur-2xl shadow-[0_10px_35px_rgba(0,0,0,0.5)] transition-all duration-300 ${scrolled ? 'border-white/15 shadow-[0_10px_40px_rgba(0,0,0,0.7)]' : 'border-white/10'}`}>
         {/* Логотип */}
-        <Link href="/" className="text-base sm:text-2xl font-heading font-bold tracking-tight text-gold-rose flex items-center gap-1.5 sm:gap-2 group shrink-0">
+        <Link href="/" className="text-base sm:text-2xl font-heading font-bold tracking-tight text-gold-rose flex items-center gap-1.5 sm:gap-2 group shrink-0 focus-visible:ring-2 focus-visible:ring-[#E0A98B] rounded-lg">
           <span className="bg-gradient-to-r from-white via-[#E0A98B] to-[#D4AF37] bg-clip-text text-transparent group-hover:brightness-110 transition-all">
             AURA
           </span>
@@ -67,42 +94,42 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
         </Link>
 
         {/* Desktop Навигация */}
-        <div className="hidden lg:flex space-x-3.5 xl:space-x-5 items-center text-[11px] xl:text-xs font-medium uppercase tracking-wider">
-          <button onClick={() => scrollTo('map')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Карта проколов
-          </button>
-          <button onClick={() => scrollTo('ear-curation')} className="text-gray-300 hover:text-gold-rose transition-colors flex items-center gap-1 whitespace-nowrap">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#E0A98B]" />
-            Сет-билдер
-          </button>
-          <button onClick={() => scrollTo('editorial')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Вдохновение
-          </button>
-          <button onClick={() => scrollTo('jewelry')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Витрина
-          </button>
-          <button onClick={() => scrollTo('healing')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Заживление
-          </button>
-          <button onClick={() => scrollTo('masters')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Anastasya
-          </button>
-          <button onClick={() => scrollTo('safety')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Безопасность
-          </button>
-          <button onClick={() => scrollTo('testimonials')} className="text-gray-300 hover:text-gold-rose transition-colors whitespace-nowrap">
-            Отзывы
-          </button>
+        <div className="hidden lg:flex space-x-2.5 xl:space-x-4 items-center text-[11px] xl:text-xs font-medium uppercase tracking-wider">
+          {NAV_ITEMS.map((item) => {
+            const isActive = activeSection === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className={`transition-all duration-200 whitespace-nowrap px-2 py-1 rounded-lg relative ${
+                  isActive
+                    ? 'text-white font-bold'
+                    : 'text-gray-300 hover:text-gold-rose'
+                }`}
+              >
+                <span className="flex items-center gap-1">
+                  {item.highlight && (
+                    <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#D4AF37] animate-ping' : 'bg-[#E0A98B]'}`} />
+                  )}
+                  {item.label}
+                </span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-2 right-2 h-[2px] bg-gradient-to-r from-[#E0A98B] to-[#D4AF37] rounded-full" />
+                )}
+              </button>
+            );
+          })}
         </div>
 
         {/* Правый блок: Переключатель валют + Кнопка записи */}
-        <div className="flex items-center gap-2.5 sm:gap-4">
+        <div className="flex items-center gap-2 sm:gap-3.5">
           {/* Переключатель валют (Desktop & Mobile) */}
           <div ref={dropdownRef} className="relative">
             <button
               onClick={() => setCurrencyDropdownOpen(!currencyDropdownOpen)}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl glass border border-white/10 text-xs font-mono font-bold text-gray-200 hover:text-white hover:border-[#E0A98B]/40 transition-all"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl glass border border-white/10 text-xs font-mono font-bold text-gray-200 hover:text-white hover:border-[#E0A98B]/40 transition-all focus-visible:ring-2 focus-visible:ring-[#E0A98B]"
               aria-label="Выбрать валюту"
+              aria-expanded={currencyDropdownOpen}
             >
               <Globe className="w-3.5 h-3.5 text-[#E0A98B]" />
               <span>{currency}</span>
@@ -110,7 +137,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             </button>
 
             {currencyDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-28 glass-card rounded-xl p-1.5 border border-white/15 shadow-2xl z-50 animate-in fade-in zoom-in-95">
+              <div className="absolute right-0 mt-2 w-32 glass-card rounded-xl p-1.5 border border-white/15 shadow-2xl z-50 animate-in fade-in zoom-in-95">
                 {currencyOptions.map((c) => (
                   <button
                     key={c}
@@ -145,7 +172,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
           {/* Гамбургер меню */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 text-gray-300 hover:text-white"
+            className="lg:hidden p-2 text-gray-300 hover:text-white focus-visible:ring-2 focus-visible:ring-[#E0A98B] rounded-lg"
             aria-label="Меню"
             aria-expanded={mobileMenuOpen}
           >
@@ -156,36 +183,23 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
       {/* Мобильное выпадающее меню */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 glass-card rounded-2xl p-5 border border-white/10 space-y-2.5 backdrop-blur-2xl shadow-2xl animate-in slide-in-from-top-2">
-          <button onClick={() => scrollTo('map')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            📍 Карта проколов
-          </button>
-          <button onClick={() => scrollTo('ear-curation')} className="block w-full text-left py-2 text-sm text-[#E0A98B] font-semibold hover:text-white border-b border-white/5">
-            ✨ Сет-билдер уха (Скидки до -15%)
-          </button>
-          <button onClick={() => scrollTo('editorial')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            📷 Визуальное вдохновение
-          </button>
-          <button onClick={() => scrollTo('jewelry')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            💎 Витрина украшений
-          </button>
-          <button onClick={() => scrollTo('healing')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            📅 Календарь заживления & Даунсайз
-          </button>
-          <button onClick={() => scrollTo('masters')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            👑 Мастер Anastasya & Портфолио
-          </button>
-          <button onClick={() => scrollTo('safety')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            🛡️ Стандарты стерилизации
-          </button>
-          <button onClick={() => scrollTo('testimonials')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
-            💬 Отзывы клиентов
-          </button>
+        <div className="lg:hidden mt-2 glass-card rounded-2xl p-5 border border-white/10 space-y-2 backdrop-blur-2xl shadow-2xl animate-in slide-in-from-top-2">
+          {NAV_ITEMS.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollTo(item.id)}
+              className={`block w-full text-left py-2 text-sm border-b border-white/5 transition-colors ${
+                item.highlight ? 'text-[#E0A98B] font-semibold' : 'text-gray-200 hover:text-gold-rose'
+              }`}
+            >
+              {item.highlight ? `✨ ${item.label} (-15%)` : item.label}
+            </button>
+          ))}
           <button onClick={() => scrollTo('faq')} className="block w-full text-left py-2 text-sm text-gray-200 hover:text-gold-rose border-b border-white/5">
             ❓ Вопросы и ответы (FAQ)
           </button>
 
-          <div className="grid grid-cols-2 gap-2 pt-1">
+          <div className="grid grid-cols-2 gap-2 pt-2">
             <a
               href={SOCIAL_LINKS.telegram.url}
               target="_blank"
