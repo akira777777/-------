@@ -137,11 +137,15 @@ select:focus-visible {
   .badge-luxury {
     @apply inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold uppercase tracking-widest bg-gradient-to-r from-[#E0A98B]/15 to-[#D4AF37]/15 border border-[#E0A98B]/30 text-[#E0A98B];
   }
+  }
+}
+
 /* ─── Scroll Margin: compensate for fixed navbar ─── */
 section[id],
 div[id] {
   scroll-margin-top: 80px;
 }
+
 
 /* ─── Subtle link animation ─── */
 a {
