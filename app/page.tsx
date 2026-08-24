@@ -4,18 +4,18 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-import Navbar from './components/Navbar';
-import ZoneSelector from './components/ZoneSelector';
-import AnatomyMap from './components/AnatomyMap';
-import EarProjectBuilder from './components/EarProjectBuilder';
-import JewelryShowcase from './components/JewelryShowcase';
-import HealingCalculator from './components/HealingCalculator';
-import MastersSection from './components/MastersSection';
-import SafetySection from './components/SafetySection';
-import AftercareDownsize from './components/AftercareDownsize';
-import TestimonialsSection from './components/TestimonialsSection';
-import FAQSection from './components/FAQSection';
-import type { BookingData } from './components/BookingModal';
+import Navbar from '@/components/Navbar';
+import ZoneSelector from '@/components/ZoneSelector';
+import AnatomyMap from '@/components/AnatomyMap';
+import EarProjectBuilder from '@/components/EarProjectBuilder';
+import JewelryShowcase from '@/components/JewelryShowcase';
+import HealingCalculator from '@/components/HealingCalculator';
+import MastersSection from '@/components/MastersSection';
+import SafetySection from '@/components/SafetySection';
+import AftercareDownsize from '@/components/AftercareDownsize';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import FAQSection from '@/components/FAQSection';
+import type { BookingData } from '@/components/BookingModal';
 import { ZONES, type ZoneId, type PiercingType } from './constants/piercings';
 import { CurrencyProvider, useCurrency } from './constants/currency';
 import { Sparkles, Shield, Award, HeartHandshake, MessageCircle, MapPin, Phone, Clock, Layers } from 'lucide-react';
@@ -28,7 +28,7 @@ const JewelryConfigurator = dynamic(() => import('./components/JewelryConfigurat
   ),
 });
 
-const BookingModal = dynamic(() => import('./components/BookingModal'), {
+const BookingModal = dynamic(() => import('@/components/BookingModal'), {
   ssr: false,
 });
 
