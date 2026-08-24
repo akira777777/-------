@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PIERCINGS, type ZoneId, type PiercingType } from '../constants/piercings';
 import { ZONE_PATHS } from '../constants/svg_assets';
-import { Sparkles, Star, ChevronRight, Eye } from 'lucide-react';
+import { Sparkles, Eye } from 'lucide-react';
 import { formatCzk } from '../constants/currency';
 
 interface AnatomyMapProps {
@@ -189,6 +189,7 @@ export default function AnatomyMap({ activeZone, onAddtoConfigurator }: AnatomyM
                   </div>
                   <button
                     onClick={() => setSelectedPiercing(null)}
+                    aria-label="Закрыть описание прокола"
                     className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-colors"
                   >
                     ✕

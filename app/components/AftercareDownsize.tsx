@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, Droplets, Clock, RefreshCw, Sparkles, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Droplets, Clock, RefreshCw, Sparkles, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function AftercareDownsize() {

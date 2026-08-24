@@ -67,6 +67,8 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 text-gray-300 hover:text-white"
             aria-label="Меню"
+            aria-expanded={mobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -75,7 +77,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-2 glass rounded-2xl p-6 border border-white/10 space-y-3 backdrop-blur-2xl shadow-2xl">
+        <div id="mobile-navigation" className="lg:hidden mt-2 glass rounded-2xl p-6 border border-white/10 space-y-3 backdrop-blur-2xl shadow-2xl">
           <button onClick={() => scrollTo('map')} className="block w-full text-left py-2 text-gray-200 hover:text-gold-rose">
             Карта проколов
           </button>

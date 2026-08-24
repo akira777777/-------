@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Award, CheckCircle2, Sparkles, ShieldCheck, HeartHandshake, Compass } from 'lucide-react';
+import { Award, CheckCircle2, Sparkles } from 'lucide-react';
 
 interface MastersSectionProps {
   onBookWithMaster: () => void;
@@ -108,7 +108,6 @@ export default function MastersSection({ onBookWithMaster }: MastersSectionProps
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover object-center"
-                  priority
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
                 <div className="absolute left-6 right-6 bottom-6 flex items-center justify-between">

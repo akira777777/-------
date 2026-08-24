@@ -316,11 +316,13 @@ export default function Home() {
       </div>
 
       {/* Модальное окно онлайн-записи */}
-      <BookingModal
-        isOpen={isBookingOpen}
-        onClose={handleCloseBooking}
-        initialData={bookingData}
-      />
+      {isBookingOpen ? (
+        <BookingModal
+          isOpen={isBookingOpen}
+          onClose={handleCloseBooking}
+          initialData={bookingData}
+        />
+      ) : null}
     </main>
   );
 }

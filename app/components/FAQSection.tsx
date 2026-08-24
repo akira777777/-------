@@ -62,11 +62,13 @@ export default function FAQSection() {
 
             return (
               <div
-                key={index}
+                key={faq.question}
                 className="glass rounded-2xl border border-white/5 overflow-hidden transition-all duration-300 hover:border-[#E0A98B]/30"
               >
                 <button
                   onClick={() => toggle(index)}
+                  aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${index}`}
                   className="w-full p-6 text-left flex justify-between items-center gap-4 text-white font-medium"
                 >
                   <span className="text-base sm:text-lg font-heading font-semibold text-gray-100">
@@ -80,6 +82,8 @@ export default function FAQSection() {
                 <AnimatePresence>
                   {isOpen && (
                     <motion.div
+                      id={`faq-answer-${index}`}
+                      role="region"
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}

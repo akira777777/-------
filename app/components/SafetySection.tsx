@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Activity, Info, Sparkles, CheckCircle2, Flame, Lock } from 'lucide-react';
+import { ShieldCheck, Award, Activity, Info, Sparkles, Lock } from 'lucide-react';
 
 export default function SafetySection() {
   const protocols = [

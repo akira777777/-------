@@ -247,7 +247,7 @@ export default function JewelryConfigurator({ basePiercing, onBookSetup }: Confi
               type="button"
               aria-pressed={withCareKit}
               onClick={() => setWithCareKit((current) => !current)}
-              className={`p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
+              className={`w-full p-4 rounded-2xl border cursor-pointer transition-all flex items-center justify-between text-left ${
                 withCareKit
                   ? 'border-[#00F2FE] bg-[#00F2FE]/10 shadow-[0_0_20px_rgba(0,242,254,0.15)]'
                   : 'border-white/5 bg-white/5 hover:border-white/20'
